@@ -1,7 +1,14 @@
 from flask import Flask, send_from_directory, jsonify, send_file, Response
 import os
+import sys
 
-app = Flask(__name__, static_folder='static', static_url_path='')
+# Get the directory where this file is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(__name__, 
+            static_folder=os.path.join(BASE_DIR, 'static'),
+            static_url_path='',
+            root_path=BASE_DIR)
 
 # Add CORS headers for API requests
 @app.after_request
@@ -17,31 +24,49 @@ def after_request(response):
 @app.route('/')
 def index():
     try:
-        static_dir = os.path.join(os.path.dirname(__file__), 'static')
+        static_dir = os.path.join(BASE_DIR, 'static')
         index_path = os.path.join(static_dir, 'index.html')
         if not os.path.exists(index_path):
-            return f'index.html not found at {index_path}. Current dir: {os.getcwd()}', 500
-        return send_from_directory('static', 'index.html')
+            return jsonify({
+                'error': 'index.html not found',
+                'path': index_path,
+                'base_dir': BASE_DIR,
+                'cwd': os.getcwd(),
+                'static_dir': static_dir,
+                'files': os.listdir(BASE_DIR) if os.path.exists(BASE_DIR) else []
+            }), 500
+        return send_from_directory(static_dir, 'index.html')
     except Exception as e:
         import traceback
-        return f'Error loading index.html: {str(e)}\n{traceback.format_exc()}', 500
+        return jsonify({
+            'error': str(e),
+            'traceback': traceback.format_exc(),
+            'base_dir': BASE_DIR,
+            'cwd': os.getcwd()
+        }), 500
 
 # Serve static JavaScript and CSS files
 @app.route('/game.js')
 def serve_game_js():
     try:
-        return send_from_directory('static', 'game.js', 
-                                  mimetype='application/javascript')
+        return send_from_directory(
+            os.path.join(BASE_DIR, 'static'), 
+            'game.js', 
+            mimetype='application/javascript'
+        )
     except Exception as e:
-        return f'Error loading game.js: {str(e)}', 500
+        return jsonify({'error': str(e), 'base_dir': BASE_DIR}), 500
 
 @app.route('/style.css')
 def serve_style_css():
     try:
-        return send_from_directory('static', 'style.css', 
-                                  mimetype='text/css')
+        return send_from_directory(
+            os.path.join(BASE_DIR, 'static'), 
+            'style.css', 
+            mimetype='text/css'
+        )
     except Exception as e:
-        return f'Error loading style.css: {str(e)}', 500
+        return jsonify({'error': str(e), 'base_dir': BASE_DIR}), 500
 
 # Serve static files (JS, CSS, etc.)
 @app.route('/<path:filename>')
@@ -72,40 +97,50 @@ def serve_static_files(filename):
     ext = os.path.splitext(filename)[1].lower()
     
     if ext in static_extensions:
-        static_path = os.path.join('static', filename)
+        static_path = os.path.join(BASE_DIR, 'static', filename)
         if os.path.exists(static_path):
-            return send_from_directory('static', filename, 
-                                     mimetype=static_extensions[ext])
+            return send_from_directory(
+                os.path.join(BASE_DIR, 'static'), 
+                filename, 
+                mimetype=static_extensions[ext]
+            )
         # If file not in static, try root directory (for level JSON files)
-        if ext == '.json' and os.path.exists(filename):
-            return send_file(filename, mimetype='application/json')
+        root_path = os.path.join(BASE_DIR, filename)
+        if ext == '.json' and os.path.exists(root_path):
+            return send_file(root_path, mimetype='application/json')
     
     # For non-static paths, serve index.html (SPA fallback)
     try:
-        return send_from_directory('static', 'index.html', 
-                                  mimetype='text/html')
+        return send_from_directory(
+            os.path.join(BASE_DIR, 'static'), 
+            'index.html', 
+            mimetype='text/html'
+        )
     except Exception as e:
-        return f'Error: {str(e)}', 500
+        return jsonify({'error': str(e), 'base_dir': BASE_DIR}), 500
 
 # Health check endpoint
 @app.route('/health')
 def health():
+    static_dir = os.path.join(BASE_DIR, 'static')
     return jsonify({
         'status': 'ok',
-        'static_folder': os.path.exists('static'),
-        'index_exists': os.path.exists(os.path.join('static', 'index.html')),
-        'game_js_exists': os.path.exists(os.path.join('static', 'game.js')),
-        'style_css_exists': os.path.exists(os.path.join('static', 'style.css')),
-        'level1_exists': os.path.exists('level1.json')
+        'base_dir': BASE_DIR,
+        'cwd': os.getcwd(),
+        'static_folder': os.path.exists(static_dir),
+        'index_exists': os.path.exists(os.path.join(static_dir, 'index.html')),
+        'game_js_exists': os.path.exists(os.path.join(static_dir, 'game.js')),
+        'style_css_exists': os.path.exists(os.path.join(static_dir, 'style.css')),
+        'level1_exists': os.path.exists(os.path.join(BASE_DIR, 'level1.json')),
+        'files_in_base': os.listdir(BASE_DIR) if os.path.exists(BASE_DIR) else []
     })
 
 # API endpoint to load level data
 @app.route('/api/levels/<int:level_num>')
 def get_level(level_num):
     """Load character level data."""
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(base_dir, f'level{level_num}.json')
-    txt_path = os.path.join(base_dir, f'level{level_num}.txt')
+    json_path = os.path.join(BASE_DIR, f'level{level_num}.json')
+    txt_path = os.path.join(BASE_DIR, f'level{level_num}.txt')
     
     level_map = {}
     if os.path.exists(json_path):
@@ -148,9 +183,8 @@ def get_level(level_num):
 @app.route('/api/idioms/<int:level_num>')
 def get_idiom_level(level_num):
     """Load idiom level data."""
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(base_dir, f'idiom_level{level_num}.json')
-    txt_path = os.path.join(base_dir, f'idiom_level{level_num}.txt')
+    json_path = os.path.join(BASE_DIR, f'idiom_level{level_num}.json')
+    txt_path = os.path.join(BASE_DIR, f'idiom_level{level_num}.txt')
     
     idioms = []
     if os.path.exists(json_path):
@@ -181,9 +215,8 @@ def get_idiom_level(level_num):
     
     return jsonify(idioms)
 
-# Export app for Vercel
-# This is the handler that Vercel will use
-handler = app
+# Vercel automatically detects Flask apps and creates the handler
+# No need to manually define handler - just export the app
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
