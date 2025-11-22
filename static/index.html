@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1.0, 
+                   maximum-scale=1.0, user-scalable=no">
+    <title>Vibe: Chinese Character Block</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        <div id="sidebar">
+            <button id="btn-rotate" class="game-btn">
+                <span class="chinese-text">认汉字</span>
+            </button>
+            <button id="btn-pinyin" class="game-btn">
+                <span class="chinese-text">认字写拼音</span>
+            </button>
+            <button id="btn-idiom" class="game-btn">
+                <span class="chinese-text">组成语</span>
+            </button>
+        </div>
+        <div id="controls">
+            <div id="score-level">
+                <div id="score">Score: 0</div>
+                <div id="level">Level: 1</div>
+            </div>
+            <div id="control-buttons">
+                <button id="btn-left" class="control-btn">←</button>
+                <button id="btn-rotate-control" class="control-btn">↻</button>
+                <button id="btn-right" class="control-btn">→</button>
+                <button id="btn-down" class="control-btn">↓</button>
+            </div>
+        </div>
+        <div id="donation-container">
+            <form action="https://www.paypal.com/donate" method="post" 
+                  target="_blank">
+                <input type="hidden" name="hosted_button_id" 
+                       value="SS3LVP7AGTN9N">
+                <button type="submit" id="donation-btn" 
+                        class="donation-button">
+                    <span class="donation-text">
+                        Your donation will make other players enjoy the game 
+                        for free
+                    </span>
+                    <span class="donation-icon">💝</span>
+                </button>
+            </form>
+        </div>
+        <div id="message-overlay"></div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
+

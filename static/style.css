@@ -1,0 +1,250 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    background: #87CEEB;
+    width: 100vw;
+    height: 100vh;
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+#game-canvas {
+    display: block;
+    background: #87CEEB;
+}
+
+#sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    z-index: 10;
+}
+
+.game-btn {
+    width: 90%;
+    height: 60px;
+    background: #D97A3C;
+    border: 2px solid #BE642D;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    touch-action: manipulation;
+}
+
+.game-btn:hover {
+    background: #E68A4D;
+}
+
+.game-btn:active {
+    background: #BE642D;
+}
+
+.chinese-text {
+    font-family: 'SimHei', 'Microsoft YaHei', Arial, sans-serif;
+}
+
+#controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25%;
+    padding: 10px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#score-level {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 8px;
+    border-radius: 4px;
+    text-align: right;
+}
+
+#score {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+#level {
+    font-size: 14px;
+    color: #000;
+    margin-top: 4px;
+}
+
+#control-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
+    max-width: 200px;
+    margin-left: auto;
+}
+
+#control-buttons #btn-rotate-control {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#control-buttons #btn-down {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    background: #D97A3C;
+    border: 2px solid #BE642D;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.1s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.control-btn:hover {
+    background: #E68A4D;
+}
+
+.control-btn:active {
+    background: #BE642D;
+    transform: scale(0.95);
+}
+
+#donation-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 30;
+}
+
+.donation-button {
+    background: #FF6B6B;
+    border: 2px solid #FF5252;
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+    touch-action: manipulation;
+}
+
+.donation-button:hover {
+    background: #FF5252;
+}
+
+.donation-text {
+    font-size: 12px;
+    color: #FFF;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.donation-icon {
+    font-size: 20px;
+}
+
+#message-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    pointer-events: none;
+}
+
+#message-overlay.show {
+    display: flex;
+}
+
+#message-overlay .message {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 24px;
+    color: #000;
+    text-align: center;
+    white-space: pre-line;
+    max-width: 80%;
+}
+
+@media (max-width: 768px) {
+    #controls {
+        width: 30%;
+    }
+    
+    #control-buttons {
+        max-width: 150px;
+    }
+    
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    #score {
+        font-size: 18px;
+    }
+    
+    #level {
+        font-size: 12px;
+    }
+    
+    .donation-text {
+        font-size: 10px;
+    }
+    
+    #sidebar {
+        width: 25%;
+    }
+    
+    .game-btn {
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
