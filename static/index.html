@@ -21,6 +21,24 @@
             <button id="btn-idiom" class="game-btn">
                 <span class="chinese-text">组成语</span>
             </button>
+            <div id="donation-container">
+                <form action="https://www.paypal.com/donate" method="post" 
+                      target="_blank">
+                    <input type="hidden" name="hosted_button_id" 
+                           value="SS3LVP7AGTN9N">
+                    <button type="submit" id="donation-btn" 
+                            class="donation-button">
+                        <div class="donation-content">
+                            <span class="donation-title">Donation</span>
+                            <span class="donation-text">
+                                Your donation will make other players enjoy the 
+                                game for free
+                            </span>
+                        </div>
+                        <span class="donation-icon">💝</span>
+                    </button>
+                </form>
+            </div>
         </div>
         <div id="controls">
             <div id="score-level">
@@ -33,21 +51,6 @@
                 <button id="btn-right" class="control-btn">→</button>
                 <button id="btn-down" class="control-btn">↓</button>
             </div>
-        </div>
-        <div id="donation-container">
-            <form action="https://www.paypal.com/donate" method="post" 
-                  target="_blank">
-                <input type="hidden" name="hosted_button_id" 
-                       value="SS3LVP7AGTN9N">
-                <button type="submit" id="donation-btn" 
-                        class="donation-button">
-                    <span class="donation-text">
-                        Your donation will make other players enjoy the game 
-                        for free
-                    </span>
-                    <span class="donation-icon">💝</span>
-                </button>
-            </form>
         </div>
         <div id="message-overlay"></div>
     </div>
