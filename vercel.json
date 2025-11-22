@@ -8,22 +8,6 @@
   ],
   "routes": [
     {
-      "src": "/api/levels/(.*)",
-      "dest": "app.py"
-    },
-    {
-      "src": "/api/idioms/(.*)",
-      "dest": "app.py"
-    },
-    {
-      "src": "/game.js",
-      "dest": "app.py"
-    },
-    {
-      "src": "/style.css",
-      "dest": "app.py"
-    },
-    {
       "src": "/(.*)",
       "dest": "app.py"
     }

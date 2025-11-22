@@ -35,7 +35,8 @@ def index():
                 'static_dir': static_dir,
                 'files': os.listdir(BASE_DIR) if os.path.exists(BASE_DIR) else []
             }), 500
-        return send_from_directory(static_dir, 'index.html')
+        return send_from_directory(static_dir, 'index.html', 
+                                  mimetype='text/html')
     except Exception as e:
         import traceback
         return jsonify({
