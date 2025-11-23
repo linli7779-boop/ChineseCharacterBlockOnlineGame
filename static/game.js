@@ -140,6 +140,7 @@ class Game {
         this.targetRight = 1;
         this.showMessageUntil = 0;
         this.message = '';
+        this.currentInstruction = '';
 
         // Layout
         this.width = this.canvas.width;
@@ -528,18 +529,19 @@ class Game {
         this.usedChars.clear();
         this.settledPinyin.clear();
 
+        let instructionText = '';
         if (mode === Mode.ROTATE) {
-            this.message = 'Rotate blocks (Space or ↻) to correct ' +
+            instructionText = 'Rotate blocks (Space or ↻) to correct ' +
                 'orientation.\nScore: 5 points × level when block lands ' +
                 'upright.';
         } else if (mode === Mode.PINYIN) {
-            this.message = 'Type pinyin for the character above the block.\n' +
+            instructionText = 'Type pinyin for the character above the block.\n' +
                 'Score: 5 points × level when pinyin matches before landing.';
         } else if (mode === Mode.IDIOM) {
-            this.message = 'Click characters in correct idiom order.\n' +
+            instructionText = 'Click characters in correct idiom order.\n' +
                 'Score: 10 points when all characters clicked correctly.';
         }
-        this.showMessageUntil = Date.now() + 5000;
+        this.updateInstruction(instructionText);
         this.spawnRound();
     }
 
@@ -928,6 +930,7 @@ class Game {
                 this.mode = null;
                 this.currentBlocks = [];
                 this.grid.clear();
+                this.updateInstruction('');
             }
         }
 
@@ -1149,6 +1152,17 @@ class Game {
             `Score: ${this.score}`;
         document.getElementById('level').textContent = 
             `Level: ${this.level}`;
+    }
+
+    updateInstruction(text) {
+        const instructionElement = document.getElementById('instruction-text');
+        if (instructionElement) {
+            if (text) {
+                instructionElement.textContent = 'Instruction: ' + text;
+            } else {
+                instructionElement.textContent = '';
+            }
+        }
     }
 
     gameLoop() {
