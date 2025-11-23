@@ -55,7 +55,7 @@ body {
 }
 
 .game-btn {
-    width: 90%;
+    width: 95%;
     height: 60px;
     background: #D97A3C;
     border: 2px solid #BE642D;
@@ -159,7 +159,7 @@ body {
 }
 
 #donation-container {
-    width: 90%;
+    width: 95%;
     margin-top: 0;
     max-width: 200px;
 }
@@ -220,7 +220,7 @@ body {
 }
 
 #instruction-container {
-    width: 95%;
+    width: 98%;
     margin-top: -10px;
     padding: 12px;
     background: transparent;
@@ -321,7 +321,7 @@ body {
     }
     
     #donation-container {
-        width: 90%;
+        width: 95%;
         max-width: 100%;
     }
     
@@ -343,7 +343,7 @@ body {
         padding: 8px;
         min-height: 60px;
         margin-top: -8px;
-        width: 95%;
+        width: 98%;
     }
 }
 
