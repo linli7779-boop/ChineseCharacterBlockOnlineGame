@@ -532,14 +532,11 @@ class Game {
         let instructionText = '';
         if (mode === Mode.ROTATE) {
             instructionText = 'Rotate blocks (Space or ↻) to correct ' +
-                'orientation.\nScore: 5 points × level when block lands ' +
-                'upright.';
+                'orientation.';
         } else if (mode === Mode.PINYIN) {
-            instructionText = 'Type pinyin for the character above the block.\n' +
-                'Score: 5 points × level when pinyin matches before landing.';
+            instructionText = 'Type pinyin for the character above the block.';
         } else if (mode === Mode.IDIOM) {
-            instructionText = 'Click characters in correct idiom order.\n' +
-                'Score: 10 points when all characters clicked correctly.';
+            instructionText = 'Click characters in correct idiom order.';
         }
         this.updateInstruction(instructionText);
         this.spawnRound();
@@ -582,12 +579,7 @@ class Game {
     }
 
     awardPoints() {
-        let base;
-        if (this.mode === Mode.ROTATE || this.mode === Mode.PINYIN) {
-            base = 5 * this.level;
-        } else {
-            base = 10;
-        }
+        const base = 10 * this.level;
         this.score += base;
         this.rightCount++;
         if ((this.mode === Mode.ROTATE || this.mode === Mode.PINYIN) &&
