@@ -172,8 +172,7 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    justify-content: center;
     transition: background 0.2s;
     touch-action: manipulation;
     width: 100%;
@@ -220,13 +219,8 @@ body {
     overflow-wrap: break-word;
 }
 
-.donation-icon {
-    font-size: 20px;
-    flex-shrink: 0;
-}
-
 #instruction-container {
-    width: 85%;
+    width: 95%;
     margin-top: -10px;
     padding: 12px;
     background: transparent;
@@ -315,11 +309,6 @@ body {
         gap: 4px;
     }
     
-    .donation-icon {
-        font-size: 14px;
-        flex-shrink: 0;
-    }
-    
     .donation-content {
         width: 100%;
         gap: 2px;
@@ -354,6 +343,7 @@ body {
         padding: 8px;
         min-height: 60px;
         margin-top: -8px;
+        width: 95%;
     }
 }
 
