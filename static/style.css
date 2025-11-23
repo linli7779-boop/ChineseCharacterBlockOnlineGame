@@ -299,22 +299,32 @@ body {
     }
     
     .donation-title {
-        font-size: 16px;
+        font-size: 12px;
     }
     
     .donation-text {
-        font-size: 11px;
+        font-size: 9px;
         max-width: 100%;
-        line-height: 1.2;
+        line-height: 1.15;
     }
     
     .donation-button {
-        padding: 10px 12px;
-        min-height: 70px;
+        padding: 6px 8px;
+        min-height: 60px;
+        max-width: 100%;
+        gap: 4px;
+    }
+    
+    .donation-icon {
+        font-size: 14px;
+        flex-shrink: 0;
     }
     
     .donation-content {
         width: 100%;
+        gap: 2px;
+        flex: 1;
+        min-width: 0;
     }
     
     #instruction-text {
@@ -323,10 +333,6 @@ body {
     
     #donation-container {
         width: 90%;
-        max-width: 100%;
-    }
-    
-    .donation-button {
         max-width: 100%;
     }
     
