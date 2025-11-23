@@ -227,7 +227,7 @@ body {
 
 #instruction-container {
     width: 90%;
-    margin-top: 0;
+    margin-top: -10px;
     padding: 12px;
     background: transparent;
     border-radius: 6px;
@@ -353,6 +353,7 @@ body {
     #instruction-container {
         padding: 8px;
         min-height: 60px;
+        margin-top: -8px;
     }
 }
 
