@@ -759,7 +759,7 @@ class Game {
             } else if (this.mode === Mode.ROTATE || 
                       this.mode === Mode.PINYIN) {
                 // Slow down falling rate for ROTATE and PINYIN modes
-                actualSpeedY = speedY * 0.7;
+                actualSpeedY = speedY * 0.5;
             }
 
             for (const blk of this.currentBlocks) {
