@@ -159,24 +159,24 @@ class Game {
             this.sidebarW = Math.floor(this.width / 5);
         }
         this.playW = this.width - this.sidebarW;
-
+        
         let blockSize;
         if (isMobile) {
-            // Calculate block size to fit at least 7 columns
-            // This ensures idiom mode (4 characters) fits comfortably
             const minCols = 7;
             const calculatedSize = Math.floor(this.playW / minCols);
-            // Also consider height to ensure blocks aren't too tall
             const heightBasedSize = Math.floor(this.height / 12);
             blockSize = Math.min(calculatedSize, heightBasedSize);
-            // Ensure minimum readable size
             blockSize = Math.max(blockSize, 30);
         } else {
             blockSize = Math.floor(this.height / 10);
         }
         
+        // Cut first column: grid starts one blockSize to the right
+        const gridLeft = this.sidebarW + blockSize;
+        const gridWidth = this.playW - blockSize;
+        
         this.grid = new Grid(
-            this.sidebarW, 0, this.playW, this.height, blockSize
+            gridLeft, 0, gridWidth, this.height, blockSize
         );
 
         // State for modes
@@ -245,35 +245,34 @@ class Game {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         
-        // Adjust sidebar width for mobile - make it narrower to give more space
+        // Calculate sidebar width first
         if (isMobile) {
-            // Use smaller sidebar on mobile (20% instead of 25%)
             this.sidebarW = Math.floor(this.width * 0.20);
         } else {
             this.sidebarW = Math.floor(this.width / 5);
         }
         this.playW = this.width - this.sidebarW;
         
-        // Adjust block size based on screen size
-        // Ensure blocks fit properly in the play area
+        // Calculate block size
         let blockSize;
         if (isMobile) {
-            // On mobile, calculate block size to fit at least 6-7 columns
-            // This ensures idiom mode (4 characters) fits comfortably
             const minCols = 7;
             const calculatedSize = Math.floor(this.playW / minCols);
-            // Also consider height to ensure blocks aren't too tall
             const heightBasedSize = Math.floor(this.height / 12);
             blockSize = Math.min(calculatedSize, heightBasedSize);
-            // Ensure minimum readable size
             blockSize = Math.max(blockSize, 30);
         } else {
             blockSize = Math.floor(this.height / 10);
         }
         
+        // Cut first column: grid starts one blockSize to the right of sidebar
+        // This visually cuts off the first column of the grid
+        const gridLeft = this.sidebarW + blockSize;
+        const gridWidth = this.playW - blockSize; // Reduce width by one column
+        
         if (this.grid) {
             this.grid = new Grid(
-                this.sidebarW, 0, this.playW, this.height, blockSize
+                gridLeft, 0, gridWidth, this.height, blockSize
             );
             if (this.mode !== null) {
                 this.grid.clear();
@@ -724,10 +723,10 @@ class Game {
                 angle = [90, 180, 270][
                     Math.floor(Math.random() * 3)];
             }
-            const x = this.sidebarW + 
+            const x = this.grid.left + 
                 Math.floor(Math.random() * this.grid.cols) * size;
             const block = new Block(
-                Math.min(x, this.sidebarW + this.grid.width - size),
+                Math.min(x, this.grid.left + this.grid.width - size),
                 0, size, ch, angle
             );
             this.currentBlocks.push(block);
@@ -771,7 +770,7 @@ class Game {
             }
             cols.sort((a, b) => a - b);
             for (let i = 0; i < Math.min(chars.length, 4); i++) {
-                const x = this.sidebarW + cols[i] * size;
+                const x = this.grid.left + cols[i] * size;
                 const block = new Block(x, 0, size, chars[i], 0);
                 this.currentBlocks.push(block);
             }
