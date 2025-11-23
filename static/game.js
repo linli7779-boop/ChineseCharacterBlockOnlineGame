@@ -154,7 +154,7 @@ class Game {
         // Initial sizing - resizeCanvas will handle proper sizing
         const isMobile = this.isMobile();
         if (isMobile) {
-            this.sidebarW = Math.floor(this.width * 0.25);
+            this.sidebarW = Math.floor(this.width * 0.20);
         } else {
             this.sidebarW = Math.floor(this.width / 5);
         }
@@ -162,10 +162,15 @@ class Game {
 
         let blockSize;
         if (isMobile) {
-            blockSize = Math.max(
-                Math.floor(this.height / 12),
-                Math.floor(this.playW / 8)
-            );
+            // Calculate block size to fit at least 7 columns
+            // This ensures idiom mode (4 characters) fits comfortably
+            const minCols = 7;
+            const calculatedSize = Math.floor(this.playW / minCols);
+            // Also consider height to ensure blocks aren't too tall
+            const heightBasedSize = Math.floor(this.height / 12);
+            blockSize = Math.min(calculatedSize, heightBasedSize);
+            // Ensure minimum readable size
+            blockSize = Math.max(blockSize, 30);
         } else {
             blockSize = Math.floor(this.height / 10);
         }
@@ -240,23 +245,28 @@ class Game {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         
-        // Adjust sidebar width for mobile
+        // Adjust sidebar width for mobile - make it narrower to give more space
         if (isMobile) {
-            this.sidebarW = Math.floor(this.width * 0.25);
+            // Use smaller sidebar on mobile (20% instead of 25%)
+            this.sidebarW = Math.floor(this.width * 0.20);
         } else {
             this.sidebarW = Math.floor(this.width / 5);
         }
         this.playW = this.width - this.sidebarW;
         
         // Adjust block size based on screen size
-        // Use smaller blocks on mobile to fit more on screen
+        // Ensure blocks fit properly in the play area
         let blockSize;
         if (isMobile) {
-            // On mobile, use smaller blocks but ensure they're readable
-            blockSize = Math.max(
-                Math.floor(this.height / 12),
-                Math.floor(this.playW / 8)
-            );
+            // On mobile, calculate block size to fit at least 6-7 columns
+            // This ensures idiom mode (4 characters) fits comfortably
+            const minCols = 7;
+            const calculatedSize = Math.floor(this.playW / minCols);
+            // Also consider height to ensure blocks aren't too tall
+            const heightBasedSize = Math.floor(this.height / 12);
+            blockSize = Math.min(calculatedSize, heightBasedSize);
+            // Ensure minimum readable size
+            blockSize = Math.max(blockSize, 30);
         } else {
             blockSize = Math.floor(this.height / 10);
         }
