@@ -256,37 +256,39 @@ body {
 @media (max-width: 768px) {
     #controls {
         width: 30%;
+        padding: 8px;
     }
     
     #control-buttons {
-        max-width: 150px;
+        max-width: 120px;
+        gap: 6px;
     }
     
     .control-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
     }
     
     #score {
-        font-size: 18px;
+        font-size: 16px;
     }
     
     #level {
-        font-size: 12px;
+        font-size: 11px;
     }
     
     .donation-title {
-        font-size: 18px;
+        font-size: 16px;
     }
     
     .donation-text {
-        font-size: 13px;
-        max-width: 150px;
+        font-size: 12px;
+        max-width: 100%;
     }
     
     #instruction-text {
-        font-size: 16px;
+        font-size: 14px;
     }
     
     #donation-container {
@@ -295,11 +297,19 @@ body {
     
     #sidebar {
         width: 25%;
+        padding: 20px 10px 10px 10px;
+        gap: 15px;
     }
     
     .game-btn {
-        height: 50px;
-        font-size: 20px;
+        height: 45px;
+        font-size: 18px;
+        width: 100%;
+    }
+    
+    #instruction-container {
+        padding: 8px;
+        min-height: 60px;
     }
 }
 

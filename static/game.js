@@ -125,6 +125,11 @@ class Game {
     constructor() {
         this.canvas = document.getElementById('game-canvas');
         this.ctx = this.canvas.getContext('2d');
+        
+        // Set initial canvas size
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        
         this.resizeCanvas();
         window.addEventListener('resize', () => this.resizeCanvas());
 
@@ -142,13 +147,29 @@ class Game {
         this.message = '';
         this.currentInstruction = '';
 
-        // Layout
+        // Layout - will be set by resizeCanvas
         this.width = this.canvas.width;
         this.height = this.canvas.height;
-        this.sidebarW = Math.floor(this.width / 5);
+        
+        // Initial sizing - resizeCanvas will handle proper sizing
+        const isMobile = this.isMobile();
+        if (isMobile) {
+            this.sidebarW = Math.floor(this.width * 0.25);
+        } else {
+            this.sidebarW = Math.floor(this.width / 5);
+        }
         this.playW = this.width - this.sidebarW;
 
-        const blockSize = Math.floor(this.height / 10);
+        let blockSize;
+        if (isMobile) {
+            blockSize = Math.max(
+                Math.floor(this.height / 12),
+                Math.floor(this.playW / 8)
+            );
+        } else {
+            blockSize = Math.floor(this.height / 10);
+        }
+        
         this.grid = new Grid(
             this.sidebarW, 0, this.playW, this.height, blockSize
         );
@@ -198,14 +219,45 @@ class Game {
         this.gameLoop();
     }
 
+    isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    getFontSize(baseSize) {
+        // Scale font size based on screen width
+        const scale = this.isMobile() ? 
+            Math.min(window.innerWidth / 400, 1.0) : 1.0;
+        return Math.max(Math.floor(baseSize * scale), 12);
+    }
+
     resizeCanvas() {
+        const isMobile = this.isMobile();
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.width = this.canvas.width;
         this.height = this.canvas.height;
-        this.sidebarW = Math.floor(this.width / 5);
+        
+        // Adjust sidebar width for mobile
+        if (isMobile) {
+            this.sidebarW = Math.floor(this.width * 0.25);
+        } else {
+            this.sidebarW = Math.floor(this.width / 5);
+        }
         this.playW = this.width - this.sidebarW;
-        const blockSize = Math.floor(this.height / 10);
+        
+        // Adjust block size based on screen size
+        // Use smaller blocks on mobile to fit more on screen
+        let blockSize;
+        if (isMobile) {
+            // On mobile, use smaller blocks but ensure they're readable
+            blockSize = Math.max(
+                Math.floor(this.height / 12),
+                Math.floor(this.playW / 8)
+            );
+        } else {
+            blockSize = Math.floor(this.height / 10);
+        }
+        
         if (this.grid) {
             this.grid = new Grid(
                 this.sidebarW, 0, this.playW, this.height, blockSize
@@ -1025,7 +1077,7 @@ class Game {
                         const pinyin = this.settledPinyin.get(key);
                         if (pinyin) {
                             this.ctx.fillStyle = '#3232DC';
-                            this.ctx.font = '20px Arial';
+                            this.ctx.font = `${this.getFontSize(20)}px Arial`;
                             this.ctx.textAlign = 'center';
                             this.ctx.textBaseline = 'bottom';
                             this.ctx.fillText(
@@ -1056,7 +1108,7 @@ class Game {
                     (this.pinyinSuccessUntil === 0 ||
                      Date.now() < this.pinyinSuccessUntil)) {
                     this.ctx.fillStyle = '#3232DC';
-                    this.ctx.font = '20px Arial';
+                    this.ctx.font = `${this.getFontSize(20)}px Arial`;
                     this.ctx.textAlign = 'center';
                     this.ctx.textBaseline = 'bottom';
                     this.ctx.fillText(
@@ -1080,25 +1132,26 @@ class Game {
 
         // HUD: score and level
         this.ctx.fillStyle = '#000000';
-        this.ctx.font = '20px Arial';
+        this.ctx.font = `${this.getFontSize(20)}px Arial`;
         this.ctx.textAlign = 'right';
         this.ctx.textBaseline = 'top';
         const scoreText = `Score: ${this.score}`;
         const levelText = `Level: ${this.level}`;
         const sx = this.grid.left + this.grid.width - 10;
         this.ctx.fillText(scoreText, sx, 8);
-        this.ctx.font = '14px Arial';
+        this.ctx.font = `${this.getFontSize(14)}px Arial`;
         this.ctx.fillText(levelText, sx, 32);
 
         // Center messages
         if (Date.now() < this.showMessageUntil && this.message) {
             const lines = this.message.split('\n');
-            const lineHeight = 24;
+            const fontSize = this.getFontSize(24);
+            const lineHeight = fontSize + 4;
             const totalHeight = lines.length * lineHeight;
             let yStart = Math.floor(
                 (this.grid.top + this.grid.height - totalHeight) / 2);
             this.ctx.fillStyle = '#000000';
-            this.ctx.font = '24px Arial';
+            this.ctx.font = `${fontSize}px Arial`;
             this.ctx.textAlign = 'center';
             this.ctx.textBaseline = 'top';
             for (let i = 0; i < lines.length; i++) {
@@ -1129,7 +1182,10 @@ class Game {
         this.ctx.rotate((angle * Math.PI) / 180);
         this.ctx.fillStyle = '#000000';
         // Use a larger font size and ensure Chinese fonts are available
-        const fontSize = Math.max(size - 8, 20);
+        // Scale font size based on block size and screen size
+        const baseFontSize = Math.max(size - 8, this.getFontSize(20));
+        const fontSize = this.isMobile() ? 
+            Math.max(baseFontSize * 0.9, size * 0.6) : baseFontSize;
         this.ctx.font = `${fontSize}px 'SimHei', 'Microsoft YaHei', 'SimSun', 'STHeiti', 'Arial Unicode MS', Arial, sans-serif`;
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
