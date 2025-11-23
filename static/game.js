@@ -232,8 +232,11 @@ class Game {
 
     resizeCanvas() {
         const isMobile = this.isMobile();
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        // Use visual viewport or window dimensions, accounting for mobile browser UI
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        this.canvas.width = vw;
+        this.canvas.height = vh;
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         

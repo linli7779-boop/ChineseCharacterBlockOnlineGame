@@ -13,19 +13,30 @@ body {
     overflow: hidden;
     background: #87CEEB;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh; /* Use dynamic viewport height for mobile */
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #game-container {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh; /* Use dynamic viewport height for mobile */
     display: flex;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 #game-canvas {
     display: block;
     background: #87CEEB;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 #sidebar {
@@ -167,6 +178,8 @@ body {
     width: 100%;
     height: auto;
     min-height: 60px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .donation-button:hover {
@@ -179,6 +192,8 @@ body {
     align-items: center;
     gap: 4px;
     flex: 1;
+    min-width: 0; /* Allow flex item to shrink */
+    overflow: hidden;
 }
 
 .donation-title {
@@ -196,8 +211,10 @@ body {
     font-weight: normal;
     line-height: 1.3;
     white-space: normal;
-    max-width: 200px;
     text-align: center;
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .donation-icon {
@@ -283,8 +300,18 @@ body {
     }
     
     .donation-text {
-        font-size: 12px;
+        font-size: 11px;
         max-width: 100%;
+        line-height: 1.2;
+    }
+    
+    .donation-button {
+        padding: 10px 12px;
+        min-height: 70px;
+    }
+    
+    .donation-content {
+        width: 100%;
     }
     
     #instruction-text {
@@ -297,8 +324,10 @@ body {
     
     #sidebar {
         width: 25%;
-        padding: 20px 10px 10px 10px;
-        gap: 15px;
+        padding: 15px 8px 8px 8px;
+        gap: 12px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .game-btn {
