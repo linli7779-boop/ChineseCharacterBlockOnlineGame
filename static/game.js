@@ -756,6 +756,10 @@ class Game {
             let actualSpeedY = speedY;
             if (this.mode === Mode.IDIOM) {
                 actualSpeedY = speedY * 0.5;
+            } else if (this.mode === Mode.ROTATE || 
+                      this.mode === Mode.PINYIN) {
+                // Slow down falling rate for ROTATE and PINYIN modes
+                actualSpeedY = speedY * 0.7;
             }
 
             for (const blk of this.currentBlocks) {
