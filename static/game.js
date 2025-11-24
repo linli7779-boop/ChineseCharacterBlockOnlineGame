@@ -1142,17 +1142,7 @@ class Game {
             }
         }
 
-        // HUD: score and level
-        this.ctx.fillStyle = '#000000';
-        this.ctx.font = `${this.getFontSize(20)}px Arial`;
-        this.ctx.textAlign = 'right';
-        this.ctx.textBaseline = 'top';
-        const scoreText = `Score: ${this.score}`;
-        const levelText = `Level: ${this.level}`;
-        const sx = this.grid.left + this.grid.width - 10;
-        this.ctx.fillText(scoreText, sx, 8);
-        this.ctx.font = `${this.getFontSize(14)}px Arial`;
-        this.ctx.fillText(levelText, sx, 32);
+        // Score and level are displayed in HTML, not on canvas
 
         // Center messages
         if (Date.now() < this.showMessageUntil && this.message) {
