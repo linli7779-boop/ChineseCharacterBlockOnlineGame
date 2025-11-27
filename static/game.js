@@ -724,6 +724,10 @@ class Game {
                                     groupX + i * blk.size;
                                 this.idiomClickedBlocks[i].y = groupY;
                             }
+                            // Speak the complete idiom when correctly completed
+                            if (this.idiomTarget) {
+                                this.speakChinese(this.idiomTarget);
+                            }
                             this.awardPoints();
                             this.idiomSuccessUntil = Date.now() + 1000;
                         } else {
@@ -1046,6 +1050,10 @@ class Game {
                     blk.settled = true;
                     if (this.mode === Mode.ROTATE) {
                         if (blk.angle % 360 === 0) {
+                            // Correct orientation - speak the character
+                            if (blk.char) {
+                                this.speakChinese(blk.char);
+                            }
                             this.awardPoints();
                             this.currentBlocks = [];
                             this.spawnRound();
@@ -1061,6 +1069,11 @@ class Game {
                             (blk.y - this.grid.top) / this.grid.cell);
                         this.settledPinyin.set(
                             `${gridX},${gridY}`, this.currentPinyin);
+                    }
+                    // Speak character when it reaches the bottom
+                    if (blk.char && 
+                        (this.mode === Mode.ROTATE || this.mode === Mode.PINYIN)) {
+                        this.speakChinese(blk.char);
                     }
                     this.currentBlocks = this.currentBlocks.filter(
                         b => b !== blk);
@@ -1097,6 +1110,10 @@ class Game {
                             blk.settled = true;
                             if (this.mode === Mode.ROTATE) {
                                 if (blk.angle % 360 === 0) {
+                                    // Correct orientation - speak the character
+                                    if (blk.char) {
+                                        this.speakChinese(blk.char);
+                                    }
                                     this.awardPoints();
                                     this.currentBlocks = [];
                                     this.spawnRound();
@@ -1115,6 +1132,11 @@ class Game {
                                 this.settledPinyin.set(
                                     `${gridX},${gridY}`, 
                                     this.currentPinyin);
+                            }
+                            // Speak character when it reaches the bottom
+                            if (blk.char && 
+                                (this.mode === Mode.ROTATE || this.mode === Mode.PINYIN)) {
+                                this.speakChinese(blk.char);
                             }
                             this.currentBlocks = this.currentBlocks.filter(
                                 b => b !== blk);
@@ -1153,11 +1175,19 @@ class Game {
                     blk.settled = true;
                     if (this.mode === Mode.ROTATE) {
                         if (blk.angle % 360 === 0) {
+                            // Correct orientation - speak the character
+                            if (blk.char) {
+                                this.speakChinese(blk.char);
+                            }
                             this.awardPoints();
                             this.currentBlocks = [];
                             this.spawnRound();
                         } else {
                             this.grid.settle(blk);
+                            // Speak character when it settles (even if wrong orientation)
+                            if (blk.char) {
+                                this.speakChinese(blk.char);
+                            }
                             this.spawnRound();
                         }
                     } else if (this.mode === Mode.PINYIN) {
@@ -1169,6 +1199,10 @@ class Game {
                                 (blk.y - this.grid.top) / this.grid.cell);
                             this.settledPinyin.set(
                                 `${gridX},${gridY}`, this.currentPinyin);
+                        }
+                        // Speak character when it reaches the bottom
+                        if (blk.char) {
+                            this.speakChinese(blk.char);
                         }
                         this.spawnRound();
                     } else if (this.mode === Mode.IDIOM) {
@@ -1441,6 +1475,45 @@ class Game {
                 if (btn) {
                     btn.style.display = 'none';
                 }
+            }
+        }
+    }
+
+    speakChinese(text) {
+        // Use Web Speech API to pronounce Chinese characters/idioms
+        if ('speechSynthesis' in window && text) {
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN'; // Chinese (Mandarin)
+            utterance.rate = 0.8; // Slightly slower for clarity
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+            
+            // Function to set voice and speak
+            const speakWithVoice = () => {
+                // Try to find a Chinese voice if available
+                const voices = window.speechSynthesis.getVoices();
+                const chineseVoice = voices.find(voice => 
+                    voice.lang.startsWith('zh') || 
+                    voice.name.toLowerCase().includes('chinese')
+                );
+                if (chineseVoice) {
+                    utterance.voice = chineseVoice;
+                }
+                window.speechSynthesis.speak(utterance);
+            };
+            
+            // Voices may not be loaded immediately, so try to load them
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length === 0) {
+                // Voices not loaded yet, wait for them
+                window.speechSynthesis.onvoiceschanged = () => {
+                    speakWithVoice();
+                };
+            } else {
+                speakWithVoice();
             }
         }
     }
