@@ -1,3 +1,37 @@
-pleaes modify the code such that the game can be deployed on vecel.com as an online game using flask. Please make it playable on multiple internet browsers such as chrome, edge, safari, firefox, playable on Windows, OS, and linux operating systems, and playable on computers and tablets such as ipad. Please add arrows for left, right, and down operations and a rotation button such that the player can click those buttons using mouse or fingers to control the motion of the chinese characters which replaces arrow keys on the keyboard in the original code. Put those buttons the top right corner underneath the level and score. in the second subgame for pinyin, please show the correct pinyin on top of the character when the character touches the bottom of the screen. Please add donation function with a statement "Your donation will make other players enjoy the game for free" on the donation button. Put the donation function at the right bottom corner. My paypal donation hostID is SS3LVP7AGTN9N. 
+pleaes modify the code such that the game can be deployed on vecel.com as an online game using flask. Please make it playable on multiple internet browsers such as chrome, edge, safari, firefox, playable on Windows, OS, and linux operating systems, and playable on computers and tablets such as ipad. Please add arrows for left, right, and down operations and a rotation button such that the player can click those buttons using mouse or fingers to control the motion of the chinese characters which replaces arrow keys on the keyboard in the original code. Put those buttons the top right corner underneath the level and score. in the second subgame for pinyin, please show the correct pinyin on top of the character when the character touches the bottom of the screen. Please add donation function with "Donation" to be the first line with a bit bigger font and make a statement "Your donation will make other players enjoy the game for free" as the second line. My paypal donation hostID is SS3LVP7AGTN9N. Please move the three game buttons on the left side up a bit, and put the donation button underneath the game buttons, and keep the distance among the buttons equal.
 
+Please put the word "Donation" to the middle of donation button. Please show the game instruction underneath the donation button after any of the game buttons is clicked instead of showing it in the middle of the screen. Let the instruction always stay there until another game button is clicked. Please add "Instruction:" in front of the instructions.
+
+please count the score by 10 multiplying the level number. please remove the part explaining how the score is calculated from the instruction.
+
+please use a multiplier 0f 0.5 instead of 0.7 for falling rate for ROTATE and PINYIN modes.
+
+pleaes make the font size of the donation button and instructions bigger and close to the font size of the game button, but they don't have to have identical font size though.
+
+when the webpage is opened on cellphone, the proportion of the box size and the font size is not correct, please make them recognize the device screen size and adjust the font size and grid size accordingly.
+
+On the cellphone screen, the donation button still doesn't cover all texts and the lower part of the game screen is truncated. Please fix those.
+
+the donation button is stretched too much, and the width of the game screen is also truncated such that sometimes one or two characters in the idiom module is truncated. Pleae fix those.
+
+the donation button and texts on the button are still not scaled properly on mobile device. Please further adjust either the button size or the font size or both.
+
+please move the instructions up a little bit.
+
+cut the first column of the grid on the left side and reposition all buttons to the middle of the non-grid space such that there are more space for the buttons and the texts.
+
+
+Please delete the heart shape from the donation button and use more sidebar lateral space for showing instructions.
+
+Please increase the width of all buttons a bit more as well as the instruction container width.
+
+there is still a lot space at side bar area in width direction not used, please make adjustment to use more space for buttons and instructions, especially on mobile device.
+
+it looks like there are two scores on the top right corner and one of them has white background instead of transparent. please fix it.
+
+Please in the mode pinyin replace typing in pinyin by choosing the correct pinyin from four candidates. One of the candidates should be the correct one and should be put at a random position among the four. Among the other three, one has wrong tone, one has wrong inital, and the other one has wrong vowel. Put all four options at the left side of screen grid vertically. change the instruction accordingly.
+
+1. set the policy:
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+2. activate the environment
 environment activation: vibe\ChineseCharacterBlockOnlineGame\Scripts\activate

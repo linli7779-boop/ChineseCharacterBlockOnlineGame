@@ -21,6 +21,189 @@ function stripToneMarks(text) {
     ).join('');
 }
 
+// Utility function to get tone mark from pinyin
+function getToneMark(pinyin) {
+    const toneChars = 'āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü';
+    for (let char of pinyin) {
+        if (toneChars.includes(char)) {
+            return char;
+        }
+    }
+    return null;
+}
+
+// Utility function to set tone mark on a vowel
+function setToneMark(vowel, tone) {
+    const toneMap = {
+        'a': ['ā', 'á', 'ǎ', 'à'],
+        'e': ['ē', 'é', 'ě', 'è'],
+        'i': ['ī', 'í', 'ǐ', 'ì'],
+        'o': ['ō', 'ó', 'ǒ', 'ò'],
+        'u': ['ū', 'ú', 'ǔ', 'ù'],
+        'v': ['ǖ', 'ǘ', 'ǚ', 'ǜ'],
+        'ü': ['ǖ', 'ǘ', 'ǚ', 'ǜ']
+    };
+    const baseVowel = stripToneMarks(vowel);
+    if (toneMap[baseVowel] && tone >= 1 && tone <= 4) {
+        return toneMap[baseVowel][tone - 1];
+    }
+    return vowel;
+}
+
+// Generate wrong tone pinyin
+function generateWrongTone(pinyin) {
+    const toneChars = 'āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü';
+    let result = pinyin;
+    let foundTone = false;
+    
+    for (let i = 0; i < result.length; i++) {
+        if (toneChars.includes(result[i])) {
+            const baseVowel = stripToneMarks(result[i]);
+            const currentTone = toneChars.indexOf(result[i]) % 4 + 1;
+            let newTone = (currentTone % 4) + 1; // Next tone
+            result = result.substring(0, i) + 
+                setToneMark(baseVowel, newTone) + 
+                result.substring(i + 1);
+            foundTone = true;
+            break;
+        }
+    }
+    
+    // If no tone mark found, add one
+    if (!foundTone) {
+        const vowels = 'aeiouv';
+        for (let i = 0; i < result.length; i++) {
+            if (vowels.includes(result[i].toLowerCase())) {
+                result = result.substring(0, i) + 
+                    setToneMark(result[i], 2) + 
+                    result.substring(i + 1);
+                break;
+            }
+        }
+    }
+    
+    return result;
+}
+
+// Generate wrong initial pinyin
+function generateWrongInitial(pinyin) {
+    const initials = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 
+                      'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 
+                      'sh', 'r', 'z', 'c', 's', 'y', 'w'];
+    const wrongInitials = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 
+                           'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 
+                           'sh', 'r', 'z', 'c', 's', 'y', 'w'];
+    
+    let stripped = stripToneMarks(pinyin);
+    let currentInitial = '';
+    
+    // Extract initial (first 1-2 characters)
+    if (stripped.startsWith('zh') || stripped.startsWith('ch') || 
+        stripped.startsWith('sh')) {
+        currentInitial = stripped.substring(0, 2);
+        stripped = stripped.substring(2);
+    } else {
+        currentInitial = stripped[0];
+        stripped = stripped.substring(1);
+    }
+    
+    // Find a different initial
+    let newInitial = currentInitial;
+    while (newInitial === currentInitial && wrongInitials.length > 1) {
+        newInitial = wrongInitials[
+            Math.floor(Math.random() * wrongInitials.length)];
+    }
+    
+    // Reconstruct with tone mark
+    const toneChar = getToneMark(pinyin);
+    if (toneChar) {
+        const baseVowel = stripToneMarks(toneChar);
+        const toneIndex = 'āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü'.indexOf(toneChar);
+        const tone = toneIndex >= 0 ? (toneIndex % 4) + 1 : 1;
+        const newToneChar = setToneMark(baseVowel, tone);
+        return newInitial + stripped.replace(baseVowel, newToneChar);
+    }
+    
+    return newInitial + stripped;
+}
+
+// Generate wrong vowel pinyin
+function generateWrongVowel(pinyin) {
+    const vowels = ['a', 'e', 'i', 'o', 'u', 'v'];
+    const wrongVowels = ['a', 'e', 'i', 'o', 'u', 'v'];
+    
+    let stripped = stripToneMarks(pinyin);
+    let toneChar = getToneMark(pinyin);
+    let baseVowel = '';
+    let vowelIndex = -1;
+    
+    // Find the vowel with tone mark
+    if (toneChar) {
+        baseVowel = stripToneMarks(toneChar);
+        for (let i = 0; i < stripped.length; i++) {
+            if (stripped[i] === baseVowel) {
+                vowelIndex = i;
+                break;
+            }
+        }
+    } else {
+        // Find first vowel
+        for (let i = 0; i < stripped.length; i++) {
+            if (vowels.includes(stripped[i])) {
+                baseVowel = stripped[i];
+                vowelIndex = i;
+                break;
+            }
+        }
+    }
+    
+    if (vowelIndex >= 0) {
+        // Find a different vowel
+        let newVowel = baseVowel;
+        while (newVowel === baseVowel && wrongVowels.length > 1) {
+            newVowel = wrongVowels[
+                Math.floor(Math.random() * wrongVowels.length)];
+        }
+        
+        // Preserve tone if exists
+        if (toneChar) {
+            const toneIndex = 'āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü'.indexOf(toneChar);
+            const tone = toneIndex >= 0 ? (toneIndex % 4) + 1 : 1;
+            const newToneChar = setToneMark(newVowel, tone);
+            return stripped.substring(0, vowelIndex) + 
+                newToneChar + 
+                stripped.substring(vowelIndex + 1);
+        }
+        
+        return stripped.substring(0, vowelIndex) + 
+            newVowel + 
+            stripped.substring(vowelIndex + 1);
+    }
+    
+    return pinyin; // Fallback
+}
+
+// Generate 4 pinyin options (correct + 3 wrong ones)
+function generatePinyinOptions(correctPinyin) {
+    const options = [
+        correctPinyin,
+        generateWrongTone(correctPinyin),
+        generateWrongInitial(correctPinyin),
+        generateWrongVowel(correctPinyin)
+    ];
+    
+    // Shuffle array
+    for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+    }
+    
+    // Find correct index after shuffling
+    const correctIndex = options.indexOf(correctPinyin);
+    
+    return { options, correctIndex };
+}
+
 // Block class
 class Block {
     constructor(x, y, size, char, angle = 0) {
@@ -184,6 +367,8 @@ class Game {
         this.currentChar = null;
         this.currentPinyin = null;
         this.typed = '';
+        this.pinyinOptions = []; // Array of 4 pinyin options
+        this.pinyinCorrectIndex = -1; // Index of correct option
         this.idiomTarget = null;
         this.idiomClickIndex = 0;
         this.idiomClickedBlocks = [];
@@ -334,6 +519,18 @@ class Game {
             'click', () => this.startMode(Mode.IDIOM)
         );
 
+        // Pinyin option buttons
+        for (let i = 0; i < 4; i++) {
+            const btn = document.getElementById(`pinyin-option-${i}`);
+            btn.addEventListener('click', () => {
+                this.handlePinyinOptionClick(i);
+            });
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.handlePinyinOptionClick(i);
+            });
+        }
+
         // Control buttons
         const btnLeft = document.getElementById('btn-left');
         const btnRight = document.getElementById('btn-right');
@@ -392,18 +589,7 @@ class Game {
                     blk.angle = (blk.angle + 90) % 360;
                 }
             }
-            if (this.mode === Mode.PINYIN) {
-                if (e.key === 'Backspace') {
-                    this.typed = this.typed.slice(0, -1);
-                } else if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
-                    this.typed += e.key.toLowerCase();
-                    if (this.currentPinyin &&
-                        stripToneMarks(this.currentPinyin) === this.typed) {
-                        this.awardPoints();
-                        this.pinyinSuccessUntil = Date.now() + 1000;
-                    }
-                }
-            }
+            // Typing removed for PINYIN mode - now uses multiple choice buttons
         });
 
         document.addEventListener('keyup', (e) => {
@@ -598,11 +784,12 @@ class Game {
             instructionText = 'Rotate blocks (Space or ↻) to correct ' +
                 'orientation.';
         } else if (mode === Mode.PINYIN) {
-            instructionText = 'Type pinyin for the character above the block.';
+            instructionText = 'Select the correct pinyin from the four options on the left side.';
         } else if (mode === Mode.IDIOM) {
             instructionText = 'Click characters in correct idiom order.';
         }
         this.updateInstruction(instructionText);
+        this.updatePinyinButtons(); // Hide/show pinyin buttons
         this.spawnRound();
     }
 
@@ -684,6 +871,8 @@ class Game {
         this.currentChar = null;
         this.currentPinyin = null;
         this.typed = '';
+        this.pinyinOptions = [];
+        this.pinyinCorrectIndex = -1;
         this.idiomTarget = null;
         this.idiomClickIndex = 0;
         this.idiomClickedBlocks = [];
@@ -732,6 +921,17 @@ class Game {
             this.currentBlocks.push(block);
             this.currentChar = ch;
             this.currentPinyin = py;
+            
+            // Generate pinyin options for PINYIN mode
+            if (this.mode === Mode.PINYIN && py) {
+                const { options, correctIndex } = 
+                    generatePinyinOptions(py);
+                this.pinyinOptions = options;
+                this.pinyinCorrectIndex = correctIndex;
+                this.updatePinyinButtons();
+            } else {
+                this.updatePinyinButtons(); // Hide buttons for other modes
+            }
             console.log(`Spawned block with character: ${ch}, pinyin: ${py}, angle: ${angle}`);
         } else {
             if (this.level - 1 >= this.idiomLevels.length) {
@@ -1114,21 +1314,6 @@ class Game {
                     continue;
                 }
                 this.drawBlock(blk.x, blk.y, blk.size, blk.char, blk.angle);
-                // Draw typed pinyin above block in PINYIN mode
-                if (this.mode === Mode.PINYIN &&
-                    this.typed &&
-                    (this.pinyinSuccessUntil === 0 ||
-                     Date.now() < this.pinyinSuccessUntil)) {
-                    this.ctx.fillStyle = '#3232DC';
-                    this.ctx.font = `${this.getFontSize(20)}px Arial`;
-                    this.ctx.textAlign = 'center';
-                    this.ctx.textBaseline = 'bottom';
-                    this.ctx.fillText(
-                        this.typed,
-                        blk.x + blk.size / 2,
-                        blk.y - 4
-                    );
-                }
             }
         }
 
@@ -1215,6 +1400,47 @@ class Game {
                 instructionElement.textContent = 'Instruction: ' + text;
             } else {
                 instructionElement.textContent = '';
+            }
+        }
+    }
+
+    handlePinyinOptionClick(index) {
+        if (this.mode !== Mode.PINYIN || 
+            this.pinyinOptions.length === 0 ||
+            this.pinyinCorrectIndex < 0) {
+            return;
+        }
+        
+        if (index === this.pinyinCorrectIndex) {
+            // Correct answer
+            this.awardPoints();
+            this.pinyinSuccessUntil = Date.now() + 1000;
+        } else {
+            // Wrong answer - could add feedback here if needed
+        }
+    }
+
+    updatePinyinButtons() {
+        const container = document.getElementById('pinyin-options-container');
+        if (!container) return;
+        
+        if (this.mode === Mode.PINYIN && 
+            this.pinyinOptions.length === 4) {
+            container.style.display = 'flex';
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`pinyin-option-${i}`);
+                if (btn) {
+                    btn.textContent = this.pinyinOptions[i];
+                    btn.style.display = 'block';
+                }
+            }
+        } else {
+            container.style.display = 'none';
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`pinyin-option-${i}`);
+                if (btn) {
+                    btn.style.display = 'none';
+                }
             }
         }
     }
