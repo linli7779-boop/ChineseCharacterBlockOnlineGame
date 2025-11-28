@@ -13,15 +13,30 @@
     <div id="game-container">
         <canvas id="game-canvas"></canvas>
         <div id="sidebar">
-            <button id="btn-rotate" class="game-btn">
-                <span class="chinese-text">认汉字</span>
-            </button>
-            <button id="btn-pinyin" class="game-btn">
-                <span class="chinese-text">认字写拼音</span>
-            </button>
-            <button id="btn-idiom" class="game-btn">
-                <span class="chinese-text">组成语</span>
-            </button>
+            <div class="game-btn-container">
+                <button id="btn-rotate" class="game-btn">
+                    <span class="chinese-text">认汉字</span>
+                </button>
+                <div id="level-menu-rotate" class="level-menu">
+                    <!-- Levels 1-14 will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="game-btn-container">
+                <button id="btn-pinyin" class="game-btn">
+                    <span class="chinese-text">认字写拼音</span>
+                </button>
+                <div id="level-menu-pinyin" class="level-menu">
+                    <!-- Levels 1-14 will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="game-btn-container">
+                <button id="btn-idiom" class="game-btn">
+                    <span class="chinese-text">组成语</span>
+                </button>
+                <div id="level-menu-idiom" class="level-menu">
+                    <!-- Levels 1-6 will be populated by JavaScript -->
+                </div>
+            </div>
             <div id="donation-container">
                 <form action="https://www.paypal.com/donate" method="post" 
                       target="_blank">

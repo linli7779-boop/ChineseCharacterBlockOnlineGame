@@ -400,6 +400,7 @@ class Game {
         };
 
         this.setupEventListeners();
+        this.setupLevelMenus();
         this.lastTime = performance.now();
         this.dataLoaded = false;
         this.loadLevelData().then(() => {
@@ -508,16 +509,32 @@ class Game {
     }
 
     setupEventListeners() {
-        // Mode buttons
+        // Mode buttons - show level menu on click
         document.getElementById('btn-rotate').addEventListener(
-            'click', () => this.startMode(Mode.ROTATE)
+            'click', (e) => {
+                e.stopPropagation();
+                this.toggleLevelMenu('rotate');
+            }
         );
         document.getElementById('btn-pinyin').addEventListener(
-            'click', () => this.startMode(Mode.PINYIN)
+            'click', (e) => {
+                e.stopPropagation();
+                this.toggleLevelMenu('pinyin');
+            }
         );
         document.getElementById('btn-idiom').addEventListener(
-            'click', () => this.startMode(Mode.IDIOM)
+            'click', (e) => {
+                e.stopPropagation();
+                this.toggleLevelMenu('idiom');
+            }
         );
+
+        // Close menus when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.game-btn-container')) {
+                this.closeAllLevelMenus();
+            }
+        });
 
         // Pinyin option buttons
         for (let i = 0; i < 4; i++) {
@@ -757,7 +774,68 @@ class Game {
         }
     }
 
-    startMode(mode) {
+    setupLevelMenus() {
+        // Setup level menu for ROTATE mode (Levels 1-14)
+        const rotateMenu = document.getElementById('level-menu-rotate');
+        for (let i = 1; i <= 14; i++) {
+            const item = document.createElement('div');
+            item.className = 'level-menu-item';
+            item.textContent = `Level ${i}`;
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeAllLevelMenus();
+                this.startMode(Mode.ROTATE, i);
+            });
+            rotateMenu.appendChild(item);
+        }
+
+        // Setup level menu for PINYIN mode (Levels 1-14)
+        const pinyinMenu = document.getElementById('level-menu-pinyin');
+        for (let i = 1; i <= 14; i++) {
+            const item = document.createElement('div');
+            item.className = 'level-menu-item';
+            item.textContent = `Level ${i}`;
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeAllLevelMenus();
+                this.startMode(Mode.PINYIN, i);
+            });
+            pinyinMenu.appendChild(item);
+        }
+
+        // Setup level menu for IDIOM mode (Levels 1-6)
+        const idiomMenu = document.getElementById('level-menu-idiom');
+        for (let i = 1; i <= 6; i++) {
+            const item = document.createElement('div');
+            item.className = 'level-menu-item';
+            item.textContent = `Level ${i}`;
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeAllLevelMenus();
+                this.startMode(Mode.IDIOM, i);
+            });
+            idiomMenu.appendChild(item);
+        }
+    }
+
+    toggleLevelMenu(mode) {
+        // Close all menus first
+        this.closeAllLevelMenus();
+        
+        // Toggle the selected menu
+        const menuId = `level-menu-${mode}`;
+        const menu = document.getElementById(menuId);
+        if (menu) {
+            menu.classList.toggle('show');
+        }
+    }
+
+    closeAllLevelMenus() {
+        const menus = document.querySelectorAll('.level-menu');
+        menus.forEach(menu => menu.classList.remove('show'));
+    }
+
+    startMode(mode, startLevel = 1) {
         if (!this.dataLoaded) {
             this.message = 'Loading game data...\nPlease wait.';
             this.showMessageUntil = Date.now() + 2000;
@@ -765,7 +843,7 @@ class Game {
             // Try again after a short delay
             setTimeout(() => {
                 if (this.dataLoaded) {
-                    this.startMode(mode);
+                    this.startMode(mode, startLevel);
                 } else {
                     this.message = 'Failed to load game data.\n' +
                         'Please refresh the page.';
@@ -775,7 +853,7 @@ class Game {
             return;
         }
         this.mode = mode;
-        this.level = 1;
+        this.level = startLevel;
         this.score = 0;
         this.rightCount = 0;
         this.setTargetRight();
@@ -794,6 +872,7 @@ class Game {
         }
         this.updateInstruction(instructionText);
         this.updatePinyinButtons(); // Hide/show pinyin buttons
+        this.closeAllLevelMenus(); // Close level menu after selection
         this.spawnRound();
     }
 
