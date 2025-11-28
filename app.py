@@ -69,6 +69,52 @@ def serve_style_css():
     except Exception as e:
         return jsonify({'error': str(e), 'base_dir': BASE_DIR}), 500
 
+# Serve assets files (videos, audio, etc.)
+@app.route('/assets/<path:filename>')
+def serve_assets(filename):
+    try:
+        assets_path = os.path.join(BASE_DIR, 'assets', filename)
+        if not os.path.exists(assets_path):
+            return jsonify({
+                'error': 'File not found',
+                'requested': filename,
+                'assets_path': assets_path,
+                'base_dir': BASE_DIR,
+                'assets_dir_exists': os.path.exists(os.path.join(BASE_DIR, 'assets')),
+                'files_in_assets': os.listdir(os.path.join(BASE_DIR, 'assets')) if os.path.exists(os.path.join(BASE_DIR, 'assets')) else []
+            }), 404
+        
+        # Determine MIME type based on extension
+        ext = os.path.splitext(filename)[1].lower()
+        mime_types = {
+            '.mp4': 'video/mp4',
+            '.wav': 'audio/wav',
+            '.mp3': 'audio/mpeg',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.gif': 'image/gif',
+            '.svg': 'image/svg+xml',
+            '.ttf': 'font/ttf',
+            '.woff': 'font/woff',
+            '.woff2': 'font/woff2'
+        }
+        mimetype = mime_types.get(ext, 'application/octet-stream')
+        
+        return send_from_directory(
+            os.path.join(BASE_DIR, 'assets'), 
+            filename, 
+            mimetype=mimetype
+        )
+    except Exception as e:
+        import traceback
+        return jsonify({
+            'error': str(e),
+            'traceback': traceback.format_exc(),
+            'filename': filename,
+            'base_dir': BASE_DIR
+        }), 500
+
 # Serve static files (JS, CSS, etc.)
 @app.route('/<path:filename>')
 def serve_static_files(filename):
@@ -94,24 +140,12 @@ def serve_static_files(filename):
         '.json': 'application/json'
     }
     
+    # Skip assets folder - handled by dedicated route
+    if filename.startswith('assets/'):
+        return 'Not found', 404
+    
     # Get file extension
     ext = os.path.splitext(filename)[1].lower()
-    
-    # Add MP4 support
-    if ext == '.mp4':
-        static_extensions['.mp4'] = 'video/mp4'
-    
-    # Handle assets folder requests
-    if filename.startswith('assets/'):
-        asset_file = filename[7:]  # Remove 'assets/' prefix
-        assets_path = os.path.join(BASE_DIR, 'assets', asset_file)
-        if os.path.exists(assets_path):
-            return send_from_directory(
-                os.path.join(BASE_DIR, 'assets'), 
-                asset_file, 
-                mimetype=static_extensions.get(ext, 'application/octet-stream')
-            )
-        return 'File not found', 404
     
     if ext in static_extensions:
         static_path = os.path.join(BASE_DIR, 'static', filename)
