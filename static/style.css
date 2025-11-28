@@ -88,8 +88,11 @@ body {
     flex-direction: column;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     z-index: 100;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overscroll-behavior: contain; /* Prevent scroll chaining */
 }
 
 .level-menu.show {
@@ -103,7 +106,12 @@ body {
     color: #000;
     border-bottom: 1px solid #E0E0E0;
     transition: background 0.2s;
-    touch-action: manipulation;
+    touch-action: pan-y; /* Allow vertical scrolling while preventing default touch actions */
+    user-select: none;
+    -webkit-user-select: none;
+    min-height: 44px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
 }
 
 .level-menu-item:last-child {
@@ -355,13 +363,23 @@ body {
 
 @media (max-width: 768px) {
     .level-menu {
-        max-height: 200px;
+        max-height: 60vh; /* Use viewport height for better mobile support */
+        max-height: calc(100vh - 200px); /* Ensure it doesn't exceed screen */
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        overscroll-behavior: contain;
+        touch-action: pan-y; /* Enable vertical scrolling on touch */
     }
 
     .level-menu-item {
         padding: 10px 12px;
         font-size: 16px;
+        min-height: 44px; /* Ensure touch targets are large enough */
+        display: flex;
+        align-items: center;
     }
+    
     #pinyin-options-container {
         left: 20%; /* Start after sidebar */
         gap: 8px;

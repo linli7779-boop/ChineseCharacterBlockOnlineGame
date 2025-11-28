@@ -31,6 +31,10 @@ it looks like there are two scores on the top right corner and one of them has w
 
 Please in the mode pinyin replace typing in pinyin by choosing the correct pinyin from four candidates. One of the candidates should be the correct one and should be put at a random position among the four. Among the other three, one has wrong tone, one has wrong inital, and the other one has wrong vowel. Put all four options at the left side of screen grid vertically. change the instruction accordingly.
 
+intead of always having to start from level 1 in each mode, please add a pulldown menu for each button which shows "Level 1" ... "Level 14" for modes "rotate" and "pinyin" and "Level 1" ... "Level 6" for mode idiom such that the game jumps to corresponding level after the choice is made by clicking the level button.
+
+on mobile device, not all levels show up in the dropdown menu, please add the function to scroll up and down the dropdown menu to facilitate level choice.
+
 1. set the policy:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 2. activate the environment
