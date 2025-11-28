@@ -553,6 +553,7 @@ class Game {
         const btnRight = document.getElementById('btn-right');
         const btnDown = document.getElementById('btn-down');
         const btnRotate = document.getElementById('btn-rotate-control');
+        const btnDemo = document.getElementById('btn-demo');
 
         btnLeft.addEventListener('click', (e) => {
             e.preventDefault();
@@ -594,6 +595,15 @@ class Game {
         btnRotate.addEventListener('touchstart', (e) => {
             e.preventDefault();
             this.handleRotate();
+        });
+
+        btnDemo.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open('assets/demo.mp4', '_blank');
+        });
+        btnDemo.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            window.open('assets/demo.mp4', '_blank');
         });
 
         // Keyboard controls
