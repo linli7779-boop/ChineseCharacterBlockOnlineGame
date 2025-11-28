@@ -97,6 +97,22 @@ def serve_static_files(filename):
     # Get file extension
     ext = os.path.splitext(filename)[1].lower()
     
+    # Add MP4 support
+    if ext == '.mp4':
+        static_extensions['.mp4'] = 'video/mp4'
+    
+    # Handle assets folder requests
+    if filename.startswith('assets/'):
+        asset_file = filename[7:]  # Remove 'assets/' prefix
+        assets_path = os.path.join(BASE_DIR, 'assets', asset_file)
+        if os.path.exists(assets_path):
+            return send_from_directory(
+                os.path.join(BASE_DIR, 'assets'), 
+                asset_file, 
+                mimetype=static_extensions.get(ext, 'application/octet-stream')
+            )
+        return 'File not found', 404
+    
     if ext in static_extensions:
         static_path = os.path.join(BASE_DIR, 'static', filename)
         if os.path.exists(static_path):
