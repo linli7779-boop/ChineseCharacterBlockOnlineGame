@@ -182,22 +182,32 @@ body {
 #control-buttons #btn-demo {
     grid-column: 2;
     grid-row: 1;
-    background: #4CAF50;
-    border: 2px solid #45a049;
+    background: #90EE90;
+    border: 2px solid #7CFC00;
     font-size: 16px;
     font-weight: bold;
 }
 
 #control-buttons #btn-demo:hover {
-    background: #45a049;
+    background: #7CFC00;
 }
 
 #control-buttons #btn-demo:active {
-    background: #3d8b40;
+    background: #7FFF00;
+}
+
+#control-buttons #btn-left {
+    grid-column: 1;
+    grid-row: 2;
 }
 
 #control-buttons #btn-rotate-control {
     grid-column: 2;
+    grid-row: 2;
+}
+
+#control-buttons #btn-right {
+    grid-column: 3;
     grid-row: 2;
 }
 
