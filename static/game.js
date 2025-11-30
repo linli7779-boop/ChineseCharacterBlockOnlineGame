@@ -623,12 +623,33 @@ class Game {
 
         btnDemo.addEventListener('click', (e) => {
             e.preventDefault();
-            window.open('assets/demo.mp4', '_blank');
+            this.showVideoModal();
         });
         btnDemo.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            window.open('assets/demo.mp4', '_blank');
+            this.showVideoModal();
         });
+
+        // Close video modal
+        const closeVideoBtn = document.getElementById('close-video-btn');
+        const videoModal = document.getElementById('video-modal');
+        if (closeVideoBtn) {
+            closeVideoBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.hideVideoModal();
+            });
+            closeVideoBtn.addEventListener('touchstart', (e) => {
+                e.stopPropagation();
+                this.hideVideoModal();
+            });
+        }
+        if (videoModal) {
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    this.hideVideoModal();
+                }
+            });
+        }
 
         // Keyboard controls
         document.addEventListener('keydown', (e) => {
@@ -883,6 +904,31 @@ class Game {
         const modal = document.getElementById('about-modal');
         if (modal) {
             modal.classList.remove('show');
+        }
+    }
+
+    showVideoModal() {
+        const modal = document.getElementById('video-modal');
+        const video = document.getElementById('demo-video');
+        if (modal && video) {
+            modal.classList.add('show');
+            // Reset and play video
+            video.currentTime = 0;
+            video.play().catch(err => {
+                console.log('Video autoplay failed:', err);
+            });
+        }
+    }
+
+    hideVideoModal() {
+        const modal = document.getElementById('video-modal');
+        const video = document.getElementById('demo-video');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
         }
     }
 

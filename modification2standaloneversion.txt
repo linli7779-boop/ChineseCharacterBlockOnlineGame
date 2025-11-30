@@ -54,6 +54,8 @@ please center the demo button with respect to the rotation button
 
 center the left and right arrow buttons to the center of the grid column. expand the demo button width to cover half of the column on the left side and half of the column on the right side
 
+the demo video doesn't show on the mobile device after clicking the demo button
+
 1. set the policy:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 2. activate the environment
