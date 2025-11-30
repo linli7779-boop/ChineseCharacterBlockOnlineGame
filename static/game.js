@@ -509,22 +509,38 @@ class Game {
     }
 
     setupEventListeners() {
+        // About button
+        const btnAbout = document.getElementById('btn-about');
+        if (btnAbout) {
+            btnAbout.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleAboutModal();
+            });
+            btnAbout.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.toggleAboutModal();
+            });
+        }
+
         // Mode buttons - show level menu on click
         document.getElementById('btn-rotate').addEventListener(
             'click', (e) => {
                 e.stopPropagation();
+                this.hideAboutModal();
                 this.toggleLevelMenu('rotate');
             }
         );
         document.getElementById('btn-pinyin').addEventListener(
             'click', (e) => {
                 e.stopPropagation();
+                this.hideAboutModal();
                 this.toggleLevelMenu('pinyin');
             }
         );
         document.getElementById('btn-idiom').addEventListener(
             'click', (e) => {
                 e.stopPropagation();
+                this.hideAboutModal();
                 this.toggleLevelMenu('idiom');
             }
         );
@@ -533,6 +549,14 @@ class Game {
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.game-btn-container')) {
                 this.closeAllLevelMenus();
+            }
+            // Close about modal when clicking on background
+            const aboutModal = document.getElementById('about-modal');
+            if (aboutModal && aboutModal.classList.contains('show')) {
+                if (e.target === aboutModal) {
+                    // Clicked on the modal background
+                    this.hideAboutModal();
+                }
             }
         });
 
@@ -794,6 +818,7 @@ class Game {
             item.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.closeAllLevelMenus();
+                this.hideAboutModal();
                 this.startMode(Mode.ROTATE, i);
             });
             rotateMenu.appendChild(item);
@@ -808,6 +833,7 @@ class Game {
             item.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.closeAllLevelMenus();
+                this.hideAboutModal();
                 this.startMode(Mode.PINYIN, i);
             });
             pinyinMenu.appendChild(item);
@@ -822,6 +848,7 @@ class Game {
             item.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.closeAllLevelMenus();
+                this.hideAboutModal();
                 this.startMode(Mode.IDIOM, i);
             });
             idiomMenu.appendChild(item);
@@ -843,6 +870,20 @@ class Game {
     closeAllLevelMenus() {
         const menus = document.querySelectorAll('.level-menu');
         menus.forEach(menu => menu.classList.remove('show'));
+    }
+
+    toggleAboutModal() {
+        const modal = document.getElementById('about-modal');
+        if (modal) {
+            modal.classList.toggle('show');
+        }
+    }
+
+    hideAboutModal() {
+        const modal = document.getElementById('about-modal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
     }
 
     startMode(mode, startLevel = 1) {

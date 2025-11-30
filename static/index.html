@@ -37,6 +37,11 @@
                     <!-- Levels 1-6 will be populated by JavaScript -->
                 </div>
             </div>
+            <div id="about-container">
+                <button id="btn-about" class="about-button">
+                    <span class="chinese-text">关于游戏</span>
+                </button>
+            </div>
             <div id="donation-container">
                 <form action="https://www.paypal.com/donate" method="post" 
                       target="_blank">
@@ -78,6 +83,19 @@
             </div>
         </div>
         <div id="message-overlay"></div>
+        <div id="about-modal" class="about-modal">
+            <div class="about-modal-content">
+                <div class="about-text">
+                    <p>认汉字共分为14关，第1关包含笔画数为1-3划的汉字，第2关包含笔画数为4划的汉字，以此类推，第14关包含笔画数为16划及以上的汉字</p>
+                    <p>认字写拼音共分为14关，与认汉字一样</p>
+                    <p>组成语共分为6关，按小学1年级到6年级应该掌握的成语分关</p>
+                    <br>
+                    <p>认汉字 has 14 levels, the 1st level includes Chinese characters which have less than 4 strikes, the 2nd level includes characters with 4 strikes, and so on. The 14th level includes characters with more than 15 strikes</p>
+                    <p>认字写拼音 has 14 levels, the same as 认汉字</p>
+                    <p>组成语 has 6 levels, ranging from 1st grade to 6th grade</p>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="game.js"></script>
 </body>

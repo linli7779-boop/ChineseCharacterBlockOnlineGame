@@ -280,6 +280,36 @@ body {
     transform: scale(0.95);
 }
 
+#about-container {
+    width: 98%;
+    margin-top: 0;
+    max-width: 200px;
+}
+
+.about-button {
+    width: 100%;
+    height: 60px;
+    background: #4A90E2;
+    border: 2px solid #357ABD;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    touch-action: manipulation;
+}
+
+.about-button:hover {
+    background: #357ABD;
+}
+
+.about-button:active {
+    transform: scale(0.95);
+}
+
 #donation-container {
     width: 98%;
     margin-top: 0;
@@ -378,6 +408,54 @@ body {
     display: flex;
 }
 
+.about-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.about-modal.show {
+    display: flex;
+    pointer-events: auto;
+}
+
+.about-modal-content {
+    background: #FFF;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 80%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    cursor: default;
+    pointer-events: auto;
+}
+
+.about-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #000;
+    text-align: left;
+}
+
+.about-text p {
+    margin-bottom: 12px;
+}
+
+.about-text p:last-child {
+    margin-bottom: 0;
+}
+
 #message-overlay .message {
     background: rgba(255, 255, 255, 0.95);
     padding: 20px 40px;
@@ -442,6 +520,27 @@ body {
     
     #level {
         font-size: 11px;
+    }
+    
+    #about-container {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .about-button {
+        height: 50px;
+        font-size: 18px;
+    }
+    
+    .about-modal-content {
+        padding: 20px;
+        max-width: 90%;
+        max-height: 85vh;
+    }
+    
+    .about-text {
+        font-size: 14px;
+        line-height: 1.6;
     }
     
     .donation-title {

@@ -35,6 +35,10 @@ intead of always having to start from level 1 in each mode, please add a pulldow
 
 on mobile device, not all levels show up in the dropdown menu, please add the function to scroll up and down the dropdown menu to facilitate level choice.
 
+move the arrow buttons and the rotation button down a bit and please add a button called "Demo" above rotation button 
+please move the left arrow and right arrow buttons to the same level as the rotate button. Please change the color of demo button to light green
+please link the demo button to demo.mp4 in folder "assets"
+
 1. set the policy:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 2. activate the environment
