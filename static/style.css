@@ -61,12 +61,12 @@ body {
 
 .game-btn {
     width: 100%;
-    height: 60px;
+    height: 50px;
     background: #D97A3C;
     border: 2px solid #BE642D;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
     color: #000;
     display: flex;
     align-items: center;
@@ -184,8 +184,10 @@ body {
     grid-row: 1;
     background: #90EE90;
     border: 2px solid #7CFC00;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
+    width: 65px;
+    height: 65px;
 }
 
 #control-buttons #btn-demo:hover {
@@ -288,12 +290,12 @@ body {
 
 .about-button {
     width: 100%;
-    height: 60px;
+    height: 50px;
     background: #4A90E2;
     border: 2px solid #357ABD;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
     color: #FFF;
     display: flex;
     align-items: center;
@@ -320,7 +322,7 @@ body {
     background: #FF6B6B;
     border: 2px solid #FF5252;
     border-radius: 6px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -329,7 +331,7 @@ body {
     touch-action: manipulation;
     width: 100%;
     height: auto;
-    min-height: 60px;
+    min-height: 50px;
     max-width: 200px;
     box-sizing: border-box;
     overflow: hidden;
@@ -351,7 +353,7 @@ body {
 }
 
 .donation-title {
-    font-size: 22px;
+    font-size: 18px;
     color: #FFF;
     font-weight: bold;
     line-height: 1.2;
@@ -360,7 +362,7 @@ body {
 }
 
 .donation-text {
-    font-size: 16px;
+    font-size: 14px;
     color: #FFF;
     font-weight: normal;
     line-height: 1.3;
@@ -555,7 +557,7 @@ body {
     
     .donation-button {
         padding: 6px 8px;
-        min-height: 60px;
+        min-height: 50px;
         max-width: 100%;
         gap: 4px;
     }
@@ -585,9 +587,15 @@ body {
     }
     
     .game-btn {
-        height: 45px;
-        font-size: 18px;
+        height: 42px;
+        font-size: 16px;
         width: 100%;
+    }
+    
+    #control-buttons #btn-demo {
+        width: 50px;
+        height: 50px;
+        font-size: 16px;
     }
     
     #donation-container {
