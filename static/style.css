@@ -180,15 +180,15 @@ body {
 }
 
 #control-buttons #btn-demo {
-    grid-column: 2;
+    grid-column: 1 / 4;
     grid-row: 1;
     background: #90EE90;
     border: 2px solid #7CFC00;
     font-size: 20px;
     font-weight: bold;
-    width: 65px;
+    width: 100%;
     height: 65px;
-    justify-self: center;
+    justify-self: stretch;
 }
 
 #control-buttons #btn-demo:hover {
@@ -202,6 +202,7 @@ body {
 #control-buttons #btn-left {
     grid-column: 1;
     grid-row: 2;
+    justify-self: center;
 }
 
 #control-buttons #btn-rotate-control {
@@ -212,6 +213,7 @@ body {
 #control-buttons #btn-right {
     grid-column: 3;
     grid-row: 2;
+    justify-self: center;
 }
 
 #pinyin-options-container {
