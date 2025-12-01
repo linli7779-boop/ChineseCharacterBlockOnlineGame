@@ -1,13 +1,1266 @@
-{
-  "红": "hóng",
-  "黄": "huáng",
-  "蓝": "lán",
-  "绿": "lǜ",
-  "白": "bái",
-  "黑": "hēi",
-  "大": "dà",
-  "小": "xiǎo",
-  "长": "cháng",
-  "短": "duǎn"
-}
-
+﻿[
+    {
+        "character":  "奏",
+        "pinyin":  "zòu"
+    },
+    {
+        "character":  "春",
+        "pinyin":  "chūn"
+    },
+    {
+        "character":  "帮",
+        "pinyin":  "bāng"
+    },
+    {
+        "character":  "珍",
+        "pinyin":  "zhēn"
+    },
+    {
+        "character":  "玻",
+        "pinyin":  "bō"
+    },
+    {
+        "character":  "毒",
+        "pinyin":  "dú"
+    },
+    {
+        "character":  "型",
+        "pinyin":  "xíng"
+    },
+    {
+        "character":  "挂",
+        "pinyin":  "guà"
+    },
+    {
+        "character":  "封",
+        "pinyin":  "fēng"
+    },
+    {
+        "character":  "持",
+        "pinyin":  "chí"
+    },
+    {
+        "character":  "项",
+        "pinyin":  "xiàng"
+    },
+    {
+        "character":  "垮",
+        "pinyin":  "kuǎ"
+    },
+    {
+        "character":  "挎",
+        "pinyin":  "kuà"
+    },
+    {
+        "character":  "城",
+        "pinyin":  "chéng"
+    },
+    {
+        "character":  "挠",
+        "pinyin":  "náo"
+    },
+    {
+        "character":  "政",
+        "pinyin":  "zhèng"
+    },
+    {
+        "character":  "赴",
+        "pinyin":  "fù"
+    },
+    {
+        "character":  "赵",
+        "pinyin":  "zhào"
+    },
+    {
+        "character":  "挡",
+        "pinyin":  "dǎng"
+    },
+    {
+        "character":  "挺",
+        "pinyin":  "tǐng"
+    },
+    {
+        "character":  "括",
+        "pinyin":  "kuò"
+    },
+    {
+        "character":  "拴",
+        "pinyin":  "shuān"
+    },
+    {
+        "character":  "拾",
+        "pinyin":  "shí"
+    },
+    {
+        "character":  "挑",
+        "pinyin":  "tiāo"
+    },
+    {
+        "character":  "指",
+        "pinyin":  "zhǐ"
+    },
+    {
+        "character":  "垫",
+        "pinyin":  "diàn"
+    },
+    {
+        "character":  "挣",
+        "pinyin":  "zhèng"
+    },
+    {
+        "character":  "挤",
+        "pinyin":  "jǐ"
+    },
+    {
+        "character":  "拼",
+        "pinyin":  "pīn"
+    },
+    {
+        "character":  "挖",
+        "pinyin":  "wā"
+    },
+    {
+        "character":  "按",
+        "pinyin":  "àn"
+    },
+    {
+        "character":  "挥",
+        "pinyin":  "huī"
+    },
+    {
+        "character":  "挪",
+        "pinyin":  "nuó"
+    },
+    {
+        "character":  "某",
+        "pinyin":  "mǒu"
+    },
+    {
+        "character":  "甚",
+        "pinyin":  "shèn"
+    },
+    {
+        "character":  "革",
+        "pinyin":  "gé"
+    },
+    {
+        "character":  "荐",
+        "pinyin":  "jiàn"
+    },
+    {
+        "character":  "巷",
+        "pinyin":  "xiàng"
+    },
+    {
+        "character":  "带",
+        "pinyin":  "dài"
+    },
+    {
+        "character":  "草",
+        "pinyin":  "cǎo"
+    },
+    {
+        "character":  "茧",
+        "pinyin":  "jiǎn"
+    },
+    {
+        "character":  "茶",
+        "pinyin":  "chá"
+    },
+    {
+        "character":  "荒",
+        "pinyin":  "huāng"
+    },
+    {
+        "character":  "茫",
+        "pinyin":  "máng"
+    },
+    {
+        "character":  "荡",
+        "pinyin":  "dàng"
+    },
+    {
+        "character":  "荣",
+        "pinyin":  "róng"
+    },
+    {
+        "character":  "故",
+        "pinyin":  "gù"
+    },
+    {
+        "character":  "胡",
+        "pinyin":  "hú"
+    },
+    {
+        "character":  "南",
+        "pinyin":  "nán"
+    },
+    {
+        "character":  "药",
+        "pinyin":  "yào"
+    },
+    {
+        "character":  "标",
+        "pinyin":  "biāo"
+    },
+    {
+        "character":  "枯",
+        "pinyin":  "kū"
+    },
+    {
+        "character":  "柄",
+        "pinyin":  "bǐng"
+    },
+    {
+        "character":  "栋",
+        "pinyin":  "dòng"
+    },
+    {
+        "character":  "相",
+        "pinyin":  "xiāng"
+    },
+    {
+        "character":  "查",
+        "pinyin":  "chá"
+    },
+    {
+        "character":  "柏",
+        "pinyin":  "bǎi"
+    },
+    {
+        "character":  "柳",
+        "pinyin":  "liǔ"
+    },
+    {
+        "character":  "柱",
+        "pinyin":  "zhù"
+    },
+    {
+        "character":  "柿",
+        "pinyin":  "shì"
+    },
+    {
+        "character":  "栏",
+        "pinyin":  "lán"
+    },
+    {
+        "character":  "树",
+        "pinyin":  "shù"
+    },
+    {
+        "character":  "要",
+        "pinyin":  "yào"
+    },
+    {
+        "character":  "咸",
+        "pinyin":  "xián"
+    },
+    {
+        "character":  "威",
+        "pinyin":  "wēi"
+    },
+    {
+        "character":  "歪",
+        "pinyin":  "wāi"
+    },
+    {
+        "character":  "研",
+        "pinyin":  "yán"
+    },
+    {
+        "character":  "砖",
+        "pinyin":  "zhuān"
+    },
+    {
+        "character":  "厘",
+        "pinyin":  "lí"
+    },
+    {
+        "character":  "厚",
+        "pinyin":  "hòu"
+    },
+    {
+        "character":  "砌",
+        "pinyin":  "qì"
+    },
+    {
+        "character":  "砍",
+        "pinyin":  "kǎn"
+    },
+    {
+        "character":  "面",
+        "pinyin":  "miàn"
+    },
+    {
+        "character":  "耐",
+        "pinyin":  "nài"
+    },
+    {
+        "character":  "耍",
+        "pinyin":  "shuǎ"
+    },
+    {
+        "character":  "牵",
+        "pinyin":  "qiān"
+    },
+    {
+        "character":  "残",
+        "pinyin":  "cán"
+    },
+    {
+        "character":  "殃",
+        "pinyin":  "yāng"
+    },
+    {
+        "character":  "轻",
+        "pinyin":  "qīng"
+    },
+    {
+        "character":  "鸦",
+        "pinyin":  "yā"
+    },
+    {
+        "character":  "皆",
+        "pinyin":  "jiē"
+    },
+    {
+        "character":  "背",
+        "pinyin":  "bèi"
+    },
+    {
+        "character":  "战",
+        "pinyin":  "zhàn"
+    },
+    {
+        "character":  "点",
+        "pinyin":  "diǎn"
+    },
+    {
+        "character":  "临",
+        "pinyin":  "lín"
+    },
+    {
+        "character":  "览",
+        "pinyin":  "lǎn"
+    },
+    {
+        "character":  "竖",
+        "pinyin":  "shù"
+    },
+    {
+        "character":  "省",
+        "pinyin":  "shěng"
+    },
+    {
+        "character":  "削",
+        "pinyin":  "xuē"
+    },
+    {
+        "character":  "尝",
+        "pinyin":  "cháng"
+    },
+    {
+        "character":  "是",
+        "pinyin":  "shì"
+    },
+    {
+        "character":  "盼",
+        "pinyin":  "pàn"
+    },
+    {
+        "character":  "眨",
+        "pinyin":  "zhǎ"
+    },
+    {
+        "character":  "哄",
+        "pinyin":  "hǒng"
+    },
+    {
+        "character":  "显",
+        "pinyin":  "xiǎn"
+    },
+    {
+        "character":  "哑",
+        "pinyin":  "yǎ"
+    },
+    {
+        "character":  "冒",
+        "pinyin":  "mào"
+    },
+    {
+        "character":  "映",
+        "pinyin":  "yìng"
+    },
+    {
+        "character":  "星",
+        "pinyin":  "xīng"
+    },
+    {
+        "character":  "昨",
+        "pinyin":  "zuó"
+    },
+    {
+        "character":  "畏",
+        "pinyin":  "wèi"
+    },
+    {
+        "character":  "趴",
+        "pinyin":  "pā"
+    },
+    {
+        "character":  "胃",
+        "pinyin":  "wèi"
+    },
+    {
+        "character":  "贵",
+        "pinyin":  "guì"
+    },
+    {
+        "character":  "界",
+        "pinyin":  "jiè"
+    },
+    {
+        "character":  "虹",
+        "pinyin":  "hóng"
+    },
+    {
+        "character":  "虾",
+        "pinyin":  "xiā"
+    },
+    {
+        "character":  "蚁",
+        "pinyin":  "yǐ"
+    },
+    {
+        "character":  "思",
+        "pinyin":  "sī"
+    },
+    {
+        "character":  "蚂",
+        "pinyin":  "mǎ"
+    },
+    {
+        "character":  "虽",
+        "pinyin":  "suī"
+    },
+    {
+        "character":  "品",
+        "pinyin":  "pǐn"
+    },
+    {
+        "character":  "咽",
+        "pinyin":  "yàn"
+    },
+    {
+        "character":  "骂",
+        "pinyin":  "mà"
+    },
+    {
+        "character":  "哗",
+        "pinyin":  "huá"
+    },
+    {
+        "character":  "咱",
+        "pinyin":  "zán"
+    },
+    {
+        "character":  "响",
+        "pinyin":  "xiǎng"
+    },
+    {
+        "character":  "哈",
+        "pinyin":  "hā"
+    },
+    {
+        "character":  "咬",
+        "pinyin":  "yǎo"
+    },
+    {
+        "character":  "咳",
+        "pinyin":  "ké"
+    },
+    {
+        "character":  "哪",
+        "pinyin":  "nǎ"
+    },
+    {
+        "character":  "炭",
+        "pinyin":  "tàn"
+    },
+    {
+        "character":  "峡",
+        "pinyin":  "xiá"
+    },
+    {
+        "character":  "罚",
+        "pinyin":  "fá"
+    },
+    {
+        "character":  "贱",
+        "pinyin":  "jiàn"
+    },
+    {
+        "character":  "贴",
+        "pinyin":  "tiē"
+    },
+    {
+        "character":  "骨",
+        "pinyin":  "gǔ"
+    },
+    {
+        "character":  "钞",
+        "pinyin":  "chāo"
+    },
+    {
+        "character":  "钟",
+        "pinyin":  "zhōng"
+    },
+    {
+        "character":  "钢",
+        "pinyin":  "gāng"
+    },
+    {
+        "character":  "钥",
+        "pinyin":  "yào"
+    },
+    {
+        "character":  "钩",
+        "pinyin":  "gōu"
+    },
+    {
+        "character":  "卸",
+        "pinyin":  "xiè"
+    },
+    {
+        "character":  "缸",
+        "pinyin":  "gāng"
+    },
+    {
+        "character":  "拜",
+        "pinyin":  "bài"
+    },
+    {
+        "character":  "看",
+        "pinyin":  "kàn"
+    },
+    {
+        "character":  "矩",
+        "pinyin":  "jǔ"
+    },
+    {
+        "character":  "怎",
+        "pinyin":  "zěn"
+    },
+    {
+        "character":  "牲",
+        "pinyin":  "shēng"
+    },
+    {
+        "character":  "选",
+        "pinyin":  "xuǎn"
+    },
+    {
+        "character":  "适",
+        "pinyin":  "shì"
+    },
+    {
+        "character":  "秒",
+        "pinyin":  "miǎo"
+    },
+    {
+        "character":  "香",
+        "pinyin":  "xiāng"
+    },
+    {
+        "character":  "种",
+        "pinyin":  "zhǒng"
+    },
+    {
+        "character":  "秋",
+        "pinyin":  "qiū"
+    },
+    {
+        "character":  "科",
+        "pinyin":  "kē"
+    },
+    {
+        "character":  "重",
+        "pinyin":  "zhòng"
+    },
+    {
+        "character":  "复",
+        "pinyin":  "fù"
+    },
+    {
+        "character":  "竿",
+        "pinyin":  "gān"
+    },
+    {
+        "character":  "段",
+        "pinyin":  "duàn"
+    },
+    {
+        "character":  "便",
+        "pinyin":  "biàn"
+    },
+    {
+        "character":  "俩",
+        "pinyin":  "liǎ"
+    },
+    {
+        "character":  "贷",
+        "pinyin":  "dài"
+    },
+    {
+        "character":  "顺",
+        "pinyin":  "shùn"
+    },
+    {
+        "character":  "修",
+        "pinyin":  "xiū"
+    },
+    {
+        "character":  "保",
+        "pinyin":  "bǎo"
+    },
+    {
+        "character":  "促",
+        "pinyin":  "cù"
+    },
+    {
+        "character":  "侮",
+        "pinyin":  "wǔ"
+    },
+    {
+        "character":  "俭",
+        "pinyin":  "jiǎn"
+    },
+    {
+        "character":  "俗",
+        "pinyin":  "sú"
+    },
+    {
+        "character":  "俘",
+        "pinyin":  "fú"
+    },
+    {
+        "character":  "信",
+        "pinyin":  "xìn"
+    },
+    {
+        "character":  "皇",
+        "pinyin":  "huáng"
+    },
+    {
+        "character":  "泉",
+        "pinyin":  "quán"
+    },
+    {
+        "character":  "鬼",
+        "pinyin":  "guǐ"
+    },
+    {
+        "character":  "侵",
+        "pinyin":  "qīn"
+    },
+    {
+        "character":  "追",
+        "pinyin":  "zhuī"
+    },
+    {
+        "character":  "俊",
+        "pinyin":  "jùn"
+    },
+    {
+        "character":  "盾",
+        "pinyin":  "dùn"
+    },
+    {
+        "character":  "待",
+        "pinyin":  "dài"
+    },
+    {
+        "character":  "律",
+        "pinyin":  "lǜ"
+    },
+    {
+        "character":  "很",
+        "pinyin":  "hěn"
+    },
+    {
+        "character":  "须",
+        "pinyin":  "xū"
+    },
+    {
+        "character":  "叙",
+        "pinyin":  "xù"
+    },
+    {
+        "character":  "剑",
+        "pinyin":  "jiàn"
+    },
+    {
+        "character":  "逃",
+        "pinyin":  "táo"
+    },
+    {
+        "character":  "食",
+        "pinyin":  "shí"
+    },
+    {
+        "character":  "盆",
+        "pinyin":  "pén"
+    },
+    {
+        "character":  "胆",
+        "pinyin":  "dǎn"
+    },
+    {
+        "character":  "胜",
+        "pinyin":  "shèng"
+    },
+    {
+        "character":  "胞",
+        "pinyin":  "bāo"
+    },
+    {
+        "character":  "胖",
+        "pinyin":  "pàng"
+    },
+    {
+        "character":  "脉",
+        "pinyin":  "mài"
+    },
+    {
+        "character":  "勉",
+        "pinyin":  "miǎn"
+    },
+    {
+        "character":  "狭",
+        "pinyin":  "xiá"
+    },
+    {
+        "character":  "狮",
+        "pinyin":  "shī"
+    },
+    {
+        "character":  "独",
+        "pinyin":  "dú"
+    },
+    {
+        "character":  "狡",
+        "pinyin":  "jiǎo"
+    },
+    {
+        "character":  "狱",
+        "pinyin":  "yù"
+    },
+    {
+        "character":  "狠",
+        "pinyin":  "hěn"
+    },
+    {
+        "character":  "贸",
+        "pinyin":  "mào"
+    },
+    {
+        "character":  "怨",
+        "pinyin":  "yuàn"
+    },
+    {
+        "character":  "急",
+        "pinyin":  "jí"
+    },
+    {
+        "character":  "饶",
+        "pinyin":  "ráo"
+    },
+    {
+        "character":  "蚀",
+        "pinyin":  "shí"
+    },
+    {
+        "character":  "饺",
+        "pinyin":  "jiǎo"
+    },
+    {
+        "character":  "饼",
+        "pinyin":  "bǐng"
+    },
+    {
+        "character":  "弯",
+        "pinyin":  "wān"
+    },
+    {
+        "character":  "将",
+        "pinyin":  "jiāng"
+    },
+    {
+        "character":  "奖",
+        "pinyin":  "jiǎng"
+    },
+    {
+        "character":  "哀",
+        "pinyin":  "āi"
+    },
+    {
+        "character":  "亭",
+        "pinyin":  "tíng"
+    },
+    {
+        "character":  "亮",
+        "pinyin":  "liàng"
+    },
+    {
+        "character":  "度",
+        "pinyin":  "dù"
+    },
+    {
+        "character":  "迹",
+        "pinyin":  "jì"
+    },
+    {
+        "character":  "庭",
+        "pinyin":  "tíng"
+    },
+    {
+        "character":  "疮",
+        "pinyin":  "chuāng"
+    },
+    {
+        "character":  "疯",
+        "pinyin":  "fēng"
+    },
+    {
+        "character":  "疫",
+        "pinyin":  "yì"
+    },
+    {
+        "character":  "疤",
+        "pinyin":  "bā"
+    },
+    {
+        "character":  "姿",
+        "pinyin":  "zī"
+    },
+    {
+        "character":  "亲",
+        "pinyin":  "qīn"
+    },
+    {
+        "character":  "音",
+        "pinyin":  "yīn"
+    },
+    {
+        "character":  "帝",
+        "pinyin":  "dì"
+    },
+    {
+        "character":  "施",
+        "pinyin":  "shī"
+    },
+    {
+        "character":  "闻",
+        "pinyin":  "wén"
+    },
+    {
+        "character":  "阀",
+        "pinyin":  "fá"
+    },
+    {
+        "character":  "阁",
+        "pinyin":  "gé"
+    },
+    {
+        "character":  "差",
+        "pinyin":  "chà"
+    },
+    {
+        "character":  "养",
+        "pinyin":  "yǎng"
+    },
+    {
+        "character":  "美",
+        "pinyin":  "měi"
+    },
+    {
+        "character":  "姜",
+        "pinyin":  "jiāng"
+    },
+    {
+        "character":  "叛",
+        "pinyin":  "pàn"
+    },
+    {
+        "character":  "送",
+        "pinyin":  "sòng"
+    },
+    {
+        "character":  "类",
+        "pinyin":  "lèi"
+    },
+    {
+        "character":  "迷",
+        "pinyin":  "mí"
+    },
+    {
+        "character":  "前",
+        "pinyin":  "qián"
+    },
+    {
+        "character":  "首",
+        "pinyin":  "shǒu"
+    },
+    {
+        "character":  "逆",
+        "pinyin":  "nì"
+    },
+    {
+        "character":  "总",
+        "pinyin":  "zǒng"
+    },
+    {
+        "character":  "炼",
+        "pinyin":  "liàn"
+    },
+    {
+        "character":  "炸",
+        "pinyin":  "zhà"
+    },
+    {
+        "character":  "炮",
+        "pinyin":  "pào"
+    },
+    {
+        "character":  "烂",
+        "pinyin":  "làn"
+    },
+    {
+        "character":  "剃",
+        "pinyin":  "tì"
+    },
+    {
+        "character":  "洁",
+        "pinyin":  "jié"
+    },
+    {
+        "character":  "洪",
+        "pinyin":  "hóng"
+    },
+    {
+        "character":  "洒",
+        "pinyin":  "sǎ"
+    },
+    {
+        "character":  "浇",
+        "pinyin":  "jiāo"
+    },
+    {
+        "character":  "浊",
+        "pinyin":  "zhuó"
+    },
+    {
+        "character":  "洞",
+        "pinyin":  "dòng"
+    },
+    {
+        "character":  "测",
+        "pinyin":  "cè"
+    },
+    {
+        "character":  "洗",
+        "pinyin":  "xǐ"
+    },
+    {
+        "character":  "活",
+        "pinyin":  "huó"
+    },
+    {
+        "character":  "派",
+        "pinyin":  "pài"
+    },
+    {
+        "character":  "洽",
+        "pinyin":  "qià"
+    },
+    {
+        "character":  "染",
+        "pinyin":  "rǎn"
+    },
+    {
+        "character":  "济",
+        "pinyin":  "jì"
+    },
+    {
+        "character":  "洋",
+        "pinyin":  "yáng"
+    },
+    {
+        "character":  "洲",
+        "pinyin":  "zhōu"
+    },
+    {
+        "character":  "浑",
+        "pinyin":  "hún"
+    },
+    {
+        "character":  "浓",
+        "pinyin":  "nóng"
+    },
+    {
+        "character":  "津",
+        "pinyin":  "jīn"
+    },
+    {
+        "character":  "恒",
+        "pinyin":  "héng"
+    },
+    {
+        "character":  "恢",
+        "pinyin":  "huī"
+    },
+    {
+        "character":  "恰",
+        "pinyin":  "qià"
+    },
+    {
+        "character":  "恼",
+        "pinyin":  "nǎo"
+    },
+    {
+        "character":  "恨",
+        "pinyin":  "hèn"
+    },
+    {
+        "character":  "举",
+        "pinyin":  "jǔ"
+    },
+    {
+        "character":  "觉",
+        "pinyin":  "jué"
+    },
+    {
+        "character":  "宣",
+        "pinyin":  "xuān"
+    },
+    {
+        "character":  "室",
+        "pinyin":  "shì"
+    },
+    {
+        "character":  "宫",
+        "pinyin":  "gōng"
+    },
+    {
+        "character":  "宪",
+        "pinyin":  "xiàn"
+    },
+    {
+        "character":  "突",
+        "pinyin":  "tū"
+    },
+    {
+        "character":  "穿",
+        "pinyin":  "chuān"
+    },
+    {
+        "character":  "窃",
+        "pinyin":  "qiè"
+    },
+    {
+        "character":  "客",
+        "pinyin":  "kè"
+    },
+    {
+        "character":  "冠",
+        "pinyin":  "guān"
+    },
+    {
+        "character":  "语",
+        "pinyin":  "yǔ"
+    },
+    {
+        "character":  "扁",
+        "pinyin":  "biǎn"
+    },
+    {
+        "character":  "袄",
+        "pinyin":  "ǎo"
+    },
+    {
+        "character":  "祖",
+        "pinyin":  "zǔ"
+    },
+    {
+        "character":  "神",
+        "pinyin":  "shén"
+    },
+    {
+        "character":  "祝",
+        "pinyin":  "zhù"
+    },
+    {
+        "character":  "误",
+        "pinyin":  "wù"
+    },
+    {
+        "character":  "诱",
+        "pinyin":  "yòu"
+    },
+    {
+        "character":  "说",
+        "pinyin":  "shuō"
+    },
+    {
+        "character":  "诵",
+        "pinyin":  "sòng"
+    },
+    {
+        "character":  "垦",
+        "pinyin":  "kěn"
+    },
+    {
+        "character":  "退",
+        "pinyin":  "tuì"
+    },
+    {
+        "character":  "既",
+        "pinyin":  "jì"
+    },
+    {
+        "character":  "屋",
+        "pinyin":  "wū"
+    },
+    {
+        "character":  "昼",
+        "pinyin":  "zhòu"
+    },
+    {
+        "character":  "费",
+        "pinyin":  "fèi"
+    },
+    {
+        "character":  "陡",
+        "pinyin":  "dǒu"
+    },
+    {
+        "character":  "眉",
+        "pinyin":  "méi"
+    },
+    {
+        "character":  "孩",
+        "pinyin":  "hái"
+    },
+    {
+        "character":  "除",
+        "pinyin":  "chú"
+    },
+    {
+        "character":  "险",
+        "pinyin":  "xiǎn"
+    },
+    {
+        "character":  "院",
+        "pinyin":  "yuàn"
+    },
+    {
+        "character":  "娃",
+        "pinyin":  "wá"
+    },
+    {
+        "character":  "姥",
+        "pinyin":  "lǎo"
+    },
+    {
+        "character":  "姨",
+        "pinyin":  "yí"
+    },
+    {
+        "character":  "姻",
+        "pinyin":  "yīn"
+    },
+    {
+        "character":  "娇",
+        "pinyin":  "jiāo"
+    },
+    {
+        "character":  "怒",
+        "pinyin":  "nù"
+    },
+    {
+        "character":  "架",
+        "pinyin":  "jià"
+    },
+    {
+        "character":  "贺",
+        "pinyin":  "hè"
+    },
+    {
+        "character":  "盈",
+        "pinyin":  "yíng"
+    },
+    {
+        "character":  "勇",
+        "pinyin":  "yǒng"
+    },
+    {
+        "character":  "怠",
+        "pinyin":  "dài"
+    },
+    {
+        "character":  "柔",
+        "pinyin":  "róu"
+    },
+    {
+        "character":  "垒",
+        "pinyin":  "lěi"
+    },
+    {
+        "character":  "绑",
+        "pinyin":  "bǎng"
+    },
+    {
+        "character":  "绒",
+        "pinyin":  "róng"
+    },
+    {
+        "character":  "结",
+        "pinyin":  "jié"
+    },
+    {
+        "character":  "绕",
+        "pinyin":  "rào"
+    },
+    {
+        "character":  "骄",
+        "pinyin":  "jiāo"
+    },
+    {
+        "character":  "绘",
+        "pinyin":  "huì"
+    },
+    {
+        "character":  "给",
+        "pinyin":  "gěi"
+    },
+    {
+        "character":  "络",
+        "pinyin":  "luò"
+    },
+    {
+        "character":  "骆",
+        "pinyin":  "luò"
+    },
+    {
+        "character":  "绝",
+        "pinyin":  "jué"
+    },
+    {
+        "character":  "绞",
+        "pinyin":  "jiǎo"
+    },
+    {
+        "character":  "统",
+        "pinyin":  "tǒng"
+    }
+]
