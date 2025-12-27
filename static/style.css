@@ -126,6 +126,33 @@ body {
     background: #E0E0E0;
 }
 
+/* Idiom level container */
+.idiom-level-container {
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.idiom-level-label {
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    background: #F9F9F9;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.idiom-option {
+    padding-left: 32px; /* Indent options under level label */
+}
+
+.idiom-option.selected {
+    background: #E3F2FD;
+    font-weight: bold;
+}
+
+.idiom-option.selected:hover {
+    background: #BBDEFB;
+}
+
 .game-btn:hover {
     background: #E68A4D;
 }
@@ -553,6 +580,17 @@ body {
         min-height: 44px; /* Ensure touch targets are large enough */
         display: flex;
         align-items: center;
+    }
+    
+    .idiom-level-label {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+    
+    .idiom-option {
+        font-size: 16px;
+        padding: 10px 12px 10px 28px;
+        min-height: 40px;
     }
     
     #pinyin-options-container {
