@@ -58,6 +58,9 @@ the demo video doesn't show on the mobile device after clicking the demo button
 
 make 关于游戏 font scale accordingly on mobile device just like the font on other buttons
 
+please use demo_clean.mp4 to replace demo.mp4 on demo button link
+
+
 1. set the policy:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 2. activate the environment

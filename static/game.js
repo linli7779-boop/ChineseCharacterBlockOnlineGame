@@ -377,6 +377,11 @@ class Game {
         this.usedChars = new Set();
         this.settledPinyin = new Map(); // Track pinyin by grid position
 
+        // Speech synthesis state
+        this.speechEnabled = false;
+        this.speechQueue = [];
+        this.voicesLoaded = false;
+
         // Physics
         this.gravity = 0.25;
         this.fallSpeed = 2.0;
@@ -508,16 +513,54 @@ class Game {
         console.log('Level data loading complete');
     }
 
+    initSpeech() {
+        if (!this.speechEnabled && 'speechSynthesis' in window) {
+            // Try to load voices immediately
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                this.voicesLoaded = true;
+            } else {
+                // Wait for voices to load
+                const onVoicesChanged = () => {
+                    this.voicesLoaded = true;
+                    window.speechSynthesis.removeEventListener(
+                        'voiceschanged', onVoicesChanged);
+                };
+                window.speechSynthesis.addEventListener(
+                    'voiceschanged', onVoicesChanged);
+                // Also try to get voices after a short delay
+                setTimeout(() => {
+                    if (window.speechSynthesis.getVoices().length > 0) {
+                        this.voicesLoaded = true;
+                    }
+                }, 100);
+            }
+            this.speechEnabled = true;
+            // Process any queued speech
+            this.processSpeechQueue();
+        }
+    }
+
     setupEventListeners() {
+        // Initialize speech on any user interaction
+        const initEvents = ['click', 'touchstart', 'keydown'];
+        initEvents.forEach(eventType => {
+            document.addEventListener(eventType, () => {
+                this.initSpeech();
+            }, { once: true });
+        });
+
         // About button
         const btnAbout = document.getElementById('btn-about');
         if (btnAbout) {
             btnAbout.addEventListener('click', (e) => {
                 e.stopPropagation();
+                this.initSpeech();
                 this.toggleAboutModal();
             });
             btnAbout.addEventListener('touchstart', (e) => {
                 e.preventDefault();
+                this.initSpeech();
                 this.toggleAboutModal();
             });
         }
@@ -526,6 +569,7 @@ class Game {
         document.getElementById('btn-rotate').addEventListener(
             'click', (e) => {
                 e.stopPropagation();
+                this.initSpeech();
                 this.hideAboutModal();
                 this.toggleLevelMenu('rotate');
             }
@@ -533,6 +577,7 @@ class Game {
         document.getElementById('btn-pinyin').addEventListener(
             'click', (e) => {
                 e.stopPropagation();
+                this.initSpeech();
                 this.hideAboutModal();
                 this.toggleLevelMenu('pinyin');
             }
@@ -540,6 +585,7 @@ class Game {
         document.getElementById('btn-idiom').addEventListener(
             'click', (e) => {
                 e.stopPropagation();
+                this.initSpeech();
                 this.hideAboutModal();
                 this.toggleLevelMenu('idiom');
             }
@@ -564,10 +610,12 @@ class Game {
         for (let i = 0; i < 4; i++) {
             const btn = document.getElementById(`pinyin-option-${i}`);
             btn.addEventListener('click', () => {
+                this.initSpeech();
                 this.handlePinyinOptionClick(i);
             });
             btn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
+                this.initSpeech();
                 this.handlePinyinOptionClick(i);
             });
         }
@@ -581,23 +629,28 @@ class Game {
 
         btnLeft.addEventListener('click', (e) => {
             e.preventDefault();
+            this.initSpeech();
             this.handleLeft();
         });
         btnLeft.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            this.initSpeech();
             this.handleLeft();
         });
 
         btnRight.addEventListener('click', (e) => {
             e.preventDefault();
+            this.initSpeech();
             this.handleRight();
         });
         btnRight.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            this.initSpeech();
             this.handleRight();
         });
 
         btnDown.addEventListener('mousedown', () => {
+            this.initSpeech();
             this.controlButtons.down = true;
         });
         btnDown.addEventListener('mouseup', () => {
@@ -605,6 +658,7 @@ class Game {
         });
         btnDown.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            this.initSpeech();
             this.controlButtons.down = true;
         });
         btnDown.addEventListener('touchend', (e) => {
@@ -614,10 +668,12 @@ class Game {
 
         btnRotate.addEventListener('click', (e) => {
             e.preventDefault();
+            this.initSpeech();
             this.handleRotate();
         });
         btnRotate.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            this.initSpeech();
             this.handleRotate();
         });
 
@@ -670,10 +726,12 @@ class Game {
 
         // Canvas click for idiom mode
         this.canvas.addEventListener('click', (e) => {
+            this.initSpeech();
             this.onCanvasClick(e);
         });
         this.canvas.addEventListener('touchend', (e) => {
             e.preventDefault();
+            this.initSpeech();
             const touch = e.changedTouches[0];
             const rect = this.canvas.getBoundingClientRect();
             const x = touch.clientX - rect.left;
@@ -1655,10 +1713,37 @@ class Game {
         }
     }
 
+    processSpeechQueue() {
+        if (!this.speechEnabled || this.speechQueue.length === 0) {
+            return;
+        }
+        
+        while (this.speechQueue.length > 0) {
+            const text = this.speechQueue.shift();
+            this.speakChineseInternal(text);
+        }
+    }
+
     speakChinese(text) {
+        if (!text) return;
+        
+        // If speech is not enabled yet, queue it
+        if (!this.speechEnabled) {
+            this.speechQueue.push(text);
+            return;
+        }
+        
+        this.speakChineseInternal(text);
+    }
+
+    speakChineseInternal(text) {
         // Use Web Speech API to pronounce Chinese characters/idioms
-        if ('speechSynthesis' in window && text) {
-            // Cancel any ongoing speech
+        if (!('speechSynthesis' in window) || !text) {
+            return;
+        }
+        
+        try {
+            // Cancel any ongoing speech to avoid overlap
             window.speechSynthesis.cancel();
             
             const utterance = new SpeechSynthesisUtterance(text);
@@ -1669,28 +1754,53 @@ class Game {
             
             // Function to set voice and speak
             const speakWithVoice = () => {
-                // Try to find a Chinese voice if available
-                const voices = window.speechSynthesis.getVoices();
-                const chineseVoice = voices.find(voice => 
-                    voice.lang.startsWith('zh') || 
-                    voice.name.toLowerCase().includes('chinese')
-                );
-                if (chineseVoice) {
-                    utterance.voice = chineseVoice;
+                try {
+                    // Try to find a Chinese voice if available
+                    const voices = window.speechSynthesis.getVoices();
+                    if (voices.length > 0) {
+                        const chineseVoice = voices.find(voice => 
+                            voice.lang.startsWith('zh') || 
+                            voice.name.toLowerCase().includes('chinese')
+                        );
+                        if (chineseVoice) {
+                            utterance.voice = chineseVoice;
+                        }
+                    }
+                    window.speechSynthesis.speak(utterance);
+                } catch (e) {
+                    console.warn('Error speaking:', e);
                 }
-                window.speechSynthesis.speak(utterance);
             };
             
-            // Voices may not be loaded immediately, so try to load them
-            const voices = window.speechSynthesis.getVoices();
-            if (voices.length === 0) {
-                // Voices not loaded yet, wait for them
-                window.speechSynthesis.onvoiceschanged = () => {
-                    speakWithVoice();
-                };
-            } else {
+            // On mobile, voices may need time to load
+            if (this.voicesLoaded) {
                 speakWithVoice();
+            } else {
+                // Try to get voices
+                const voices = window.speechSynthesis.getVoices();
+                if (voices.length > 0) {
+                    this.voicesLoaded = true;
+                    speakWithVoice();
+                } else {
+                    // Wait for voices to load, but also try immediately
+                    const onVoicesChanged = () => {
+                        this.voicesLoaded = true;
+                        speakWithVoice();
+                        window.speechSynthesis.removeEventListener(
+                            'voiceschanged', onVoicesChanged);
+                    };
+                    window.speechSynthesis.addEventListener(
+                        'voiceschanged', onVoicesChanged);
+                    // Also try to speak immediately (some browsers work without waiting)
+                    setTimeout(() => {
+                        if (!this.voicesLoaded) {
+                            speakWithVoice();
+                        }
+                    }, 50);
+                }
             }
+        } catch (e) {
+            console.warn('Error in speakChinese:', e);
         }
     }
 
