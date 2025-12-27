@@ -564,6 +564,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    .game-btn-container {
+        overflow: visible; /* Allow menu to extend beyond container */
+    }
+    
     .level-menu {
         max-height: 60vh; /* Use viewport height for better mobile support */
         max-height: calc(100vh - 200px); /* Ensure it doesn't exceed screen */
@@ -572,6 +576,11 @@ body {
         -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
         overscroll-behavior: contain;
         touch-action: pan-y; /* Enable vertical scrolling on touch */
+        min-width: 240px; /* Ensure minimum width to prevent truncation */
+        width: 260px; /* Fixed width wider than button to show full text */
+        max-width: calc(100vw - 40px); /* Prevent overflow beyond viewport */
+        left: 0;
+        right: auto; /* Override right: 0 to allow expansion */
     }
 
     .level-menu-item {
@@ -580,6 +589,8 @@ body {
         min-height: 44px; /* Ensure touch targets are large enough */
         display: flex;
         align-items: center;
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: visible; /* Allow text to be visible */
     }
     
     .idiom-level-label {
