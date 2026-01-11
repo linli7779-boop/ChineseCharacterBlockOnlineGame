@@ -1238,8 +1238,10 @@ class Game {
             }
             console.log(`Using idiom level ${this.level}, ` +
                 `array index ${this.level - 1}, ` +
-                `loaded ${idioms.length} idioms`);
+                `loaded ${idioms.length} idioms. ` +
+                `First idiom in array: ${idioms[0]}`);
             const target = idioms[Math.floor(Math.random() * idioms.length)];
+            console.log(`Selected idiom: ${target}`);
             this.idiomTarget = target;
             
             // Speak the idiom if pronunciation hint is enabled
