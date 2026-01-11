@@ -68,6 +68,16 @@ please expand the width of the pulldown menu for each game button because it is 
 
 on mobile devices, the idiom pulldown menu text "with hint" and "without hint" are still truncated, please fix that.
 
+please decrease the falling rate of the characters in game "idiom" one fifth of the current rate
+
+in game "idiom", it is not very responsive to the mouse click, please improve that.
+
+in model "idiom", it seems that the clicks are only recognized when the idiom falls to the bottom half of the screen close to the buttom, please diagnoze and fix it.
+
+please remove "with hint" and "without hint" options from mode "idiom", but keep the way that option "with hint" works as the standard way.
+
+Please make sure when "with hint" or "without hint" is selcted under certain level, the code receives the correct level number, and the correct level number is passed through the code. The correct way which should work is: When level 1 is selected from the pulldown menu, the idioms from the file "idiom_level1.json" are randomly picked; When level 2 is selected from the pulldown menu, the idioms from the file "idiom_level2.json" are randomly picked; When level 3 is selected from the pulldown menu, the idioms from the file "idiom_level3.json" are randomly picked; When level 4 is selected from the pulldown menu, the idioms from the file "idiom_level4.json" are randomly picked;When level 5 is selected from the pulldown menu, the idioms from the file "idiom_level5.json" are randomly picked; When level 6 is selected from the pulldown menu, the idioms from the file "idiom_level6.json" are randomly picked. Please fix the code.
+
 1. deactivate default base environment
 conda deactivate base
 2. set the policy:
