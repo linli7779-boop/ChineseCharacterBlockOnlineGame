@@ -937,71 +937,17 @@ class Game {
         // Setup level menu for IDIOM mode (Levels 1-6)
         const idiomMenu = document.getElementById('level-menu-idiom');
         for (let i = 1; i <= 6; i++) {
-            // Create container for level options
-            const levelContainer = document.createElement('div');
-            levelContainer.className = 'idiom-level-container';
-            
-            // Level label
-            const levelLabel = document.createElement('div');
-            levelLabel.className = 'idiom-level-label';
-            levelLabel.textContent = `Level ${i}`;
-            levelContainer.appendChild(levelLabel);
-            
-            // With hint option
-            const withHintItem = document.createElement('div');
-            withHintItem.className = 'level-menu-item idiom-option';
-            withHintItem.textContent = 'With Hint';
-            withHintItem.dataset.level = i;
-            withHintItem.dataset.hint = 'true';
-            // Check if this option is selected (default: false)
-            if (this.idiomHintEnabled.get(i) === true) {
-                withHintItem.classList.add('selected');
-            }
-            withHintItem.addEventListener('click', (e) => {
+            const item = document.createElement('div');
+            item.className = 'level-menu-item';
+            item.textContent = `Level ${i}`;
+            item.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // Read level from dataset to ensure correct value
-                const levelNum = parseInt(withHintItem.dataset.level, 10);
-                console.log(`With Hint clicked - level from dataset: ${levelNum}`);
-                // Update selected state
-                const allOptions = idiomMenu.querySelectorAll(
-                    `.idiom-option[data-level="${levelNum}"]`);
-                allOptions.forEach(opt => opt.classList.remove('selected'));
-                withHintItem.classList.add('selected');
                 this.closeAllLevelMenus();
                 this.hideAboutModal();
-                this.idiomHintEnabled.set(levelNum, true);
-                this.startMode(Mode.IDIOM, levelNum);
+                this.idiomHintEnabled.set(i, true);
+                this.startMode(Mode.IDIOM, i);
             });
-            levelContainer.appendChild(withHintItem);
-            
-            // Without hint option
-            const withoutHintItem = document.createElement('div');
-            withoutHintItem.className = 'level-menu-item idiom-option';
-            withoutHintItem.textContent = 'Without Hint';
-            withoutHintItem.dataset.level = i;
-            withoutHintItem.dataset.hint = 'false';
-            // Check if this option is selected (default: false, so this is default)
-            if (this.idiomHintEnabled.get(i) !== true) {
-                withoutHintItem.classList.add('selected');
-            }
-            withoutHintItem.addEventListener('click', (e) => {
-                e.stopPropagation();
-                // Read level from dataset to ensure correct value
-                const levelNum = parseInt(withoutHintItem.dataset.level, 10);
-                console.log(`Without Hint clicked - level from dataset: ${levelNum}`);
-                // Update selected state
-                const allOptions = idiomMenu.querySelectorAll(
-                    `.idiom-option[data-level="${levelNum}"]`);
-                allOptions.forEach(opt => opt.classList.remove('selected'));
-                withoutHintItem.classList.add('selected');
-                this.closeAllLevelMenus();
-                this.hideAboutModal();
-                this.idiomHintEnabled.set(levelNum, false);
-                this.startMode(Mode.IDIOM, levelNum);
-            });
-            levelContainer.appendChild(withoutHintItem);
-            
-            idiomMenu.appendChild(levelContainer);
+            idiomMenu.appendChild(item);
         }
     }
 
