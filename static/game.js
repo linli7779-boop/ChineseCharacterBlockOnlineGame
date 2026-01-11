@@ -867,7 +867,7 @@ class Game {
                                  this.idiomClickedBlocks) {
                                 if (this.currentBlocks.includes(clickedBlk)) {
                                     clickedBlk.settled = false;
-                                    clickedBlk.vy = this.fallSpeed * 0.5;
+                                    clickedBlk.vy = this.fallSpeed * 0.1;
                                 }
                             }
                             this.idiomClickedBlocks = [];
@@ -878,7 +878,7 @@ class Game {
                     for (const clickedBlk of this.idiomClickedBlocks) {
                         if (this.currentBlocks.includes(clickedBlk)) {
                             clickedBlk.settled = false;
-                            clickedBlk.vy = this.fallSpeed * 0.5;
+                            clickedBlk.vy = this.fallSpeed * 0.1;
                         }
                     }
                     this.idiomClickedBlocks = [];
@@ -1327,7 +1327,7 @@ class Game {
                            this.fastFallSpeed : this.fallSpeed;
             let actualSpeedY = speedY;
             if (this.mode === Mode.IDIOM) {
-                actualSpeedY = speedY * 0.5;
+                actualSpeedY = speedY * 0.1; // One fifth of previous 0.5 rate
             } else if (this.mode === Mode.ROTATE || 
                       this.mode === Mode.PINYIN) {
                 // Slow down falling rate for ROTATE and PINYIN modes
