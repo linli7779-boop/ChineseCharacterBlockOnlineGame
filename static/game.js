@@ -945,15 +945,18 @@ class Game {
             }
             withHintItem.addEventListener('click', (e) => {
                 e.stopPropagation();
+                // Read level from dataset to ensure correct value
+                const levelNum = parseInt(withHintItem.dataset.level, 10);
+                console.log(`With Hint clicked - level from dataset: ${levelNum}`);
                 // Update selected state
                 const allOptions = idiomMenu.querySelectorAll(
-                    `.idiom-option[data-level="${i}"]`);
+                    `.idiom-option[data-level="${levelNum}"]`);
                 allOptions.forEach(opt => opt.classList.remove('selected'));
                 withHintItem.classList.add('selected');
                 this.closeAllLevelMenus();
                 this.hideAboutModal();
-                this.idiomHintEnabled.set(i, true);
-                this.startMode(Mode.IDIOM, i);
+                this.idiomHintEnabled.set(levelNum, true);
+                this.startMode(Mode.IDIOM, levelNum);
             });
             levelContainer.appendChild(withHintItem);
             
@@ -969,15 +972,18 @@ class Game {
             }
             withoutHintItem.addEventListener('click', (e) => {
                 e.stopPropagation();
+                // Read level from dataset to ensure correct value
+                const levelNum = parseInt(withoutHintItem.dataset.level, 10);
+                console.log(`Without Hint clicked - level from dataset: ${levelNum}`);
                 // Update selected state
                 const allOptions = idiomMenu.querySelectorAll(
-                    `.idiom-option[data-level="${i}"]`);
+                    `.idiom-option[data-level="${levelNum}"]`);
                 allOptions.forEach(opt => opt.classList.remove('selected'));
                 withoutHintItem.classList.add('selected');
                 this.closeAllLevelMenus();
                 this.hideAboutModal();
-                this.idiomHintEnabled.set(i, false);
-                this.startMode(Mode.IDIOM, i);
+                this.idiomHintEnabled.set(levelNum, false);
+                this.startMode(Mode.IDIOM, levelNum);
             });
             levelContainer.appendChild(withoutHintItem);
             
@@ -1060,6 +1066,7 @@ class Game {
         }
         this.mode = mode;
         this.level = startLevel;
+        console.log(`startMode called with mode=${mode}, startLevel=${startLevel}, setting this.level=${this.level}`);
         this.score = 0;
         this.rightCount = 0;
         this.setTargetRight();
