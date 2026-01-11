@@ -68,7 +68,9 @@ please expand the width of the pulldown menu for each game button because it is 
 
 on mobile devices, the idiom pulldown menu text "with hint" and "without hint" are still truncated, please fix that.
 
-1. set the policy:
+1. deactivate default base environment
+conda deactivate base
+2. set the policy:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
-2. activate the environment
+3. activate the environment
 environment activation: vibe\ChineseCharacterBlockOnlineGame\Scripts\activate

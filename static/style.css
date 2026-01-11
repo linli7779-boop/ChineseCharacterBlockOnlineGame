@@ -576,8 +576,8 @@ body {
         -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
         overscroll-behavior: contain;
         touch-action: pan-y; /* Enable vertical scrolling on touch */
-        min-width: 240px; /* Ensure minimum width to prevent truncation */
-        width: 260px; /* Fixed width wider than button to show full text */
+        min-width: 280px; /* Ensure minimum width to prevent truncation */
+        width: 280px; /* Fixed width wider to show full text including "Without Hint" */
         max-width: calc(100vw - 40px); /* Prevent overflow beyond viewport */
         left: 0;
         right: auto; /* Override right: 0 to allow expansion */
@@ -602,6 +602,8 @@ body {
         font-size: 16px;
         padding: 10px 12px 10px 28px;
         min-height: 40px;
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: visible; /* Allow text to be visible */
     }
     
     #pinyin-options-container {

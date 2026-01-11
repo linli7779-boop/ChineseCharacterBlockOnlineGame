@@ -504,7 +504,8 @@ class Game {
                 const data = await response.json();
                 this.idiomLevels.push(data);
                 if (data.length > 0) {
-                    console.log(`Loaded idiom level ${i} with ${data.length} idioms`);
+                    console.log(`Loaded idiom level ${i} with ${data.length} idioms. ` +
+                        `First idiom: ${data[0]}`);
                 }
             } catch (e) {
                 console.error(`Error loading idiom level ${i}:`, e);
@@ -1235,6 +1236,9 @@ class Game {
                 console.warn(`Idiom level ${this.level} data is empty`);
                 return;
             }
+            console.log(`Using idiom level ${this.level}, ` +
+                `array index ${this.level - 1}, ` +
+                `loaded ${idioms.length} idioms`);
             const target = idioms[Math.floor(Math.random() * idioms.length)];
             this.idiomTarget = target;
             
