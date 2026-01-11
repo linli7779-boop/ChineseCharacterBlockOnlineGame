@@ -726,10 +726,18 @@ class Game {
             this.keys[e.key] = false;
         });
 
-        // Canvas click for idiom mode
-        this.canvas.addEventListener('click', (e) => {
+        // Canvas click for idiom mode - use mousedown for better responsiveness
+        this.canvas.addEventListener('mousedown', (e) => {
+            e.preventDefault();
             this.initSpeech();
             this.onCanvasClick(e);
+        });
+        // Also handle click as fallback
+        this.canvas.addEventListener('click', (e) => {
+            if (this.mode === Mode.IDIOM) {
+                e.preventDefault();
+                this.onCanvasClick(e);
+            }
         });
         this.canvas.addEventListener('touchend', (e) => {
             e.preventDefault();
@@ -803,10 +811,21 @@ class Game {
             return;
         }
 
-        const x = e.offsetX || e.clientX - 
-            this.canvas.getBoundingClientRect().left;
-        const y = e.offsetY || e.clientY - 
-            this.canvas.getBoundingClientRect().top;
+        // Get accurate click coordinates
+        // offsetX/offsetY are relative to the canvas element's coordinate system
+        const rect = this.canvas.getBoundingClientRect();
+        const scaleX = this.canvas.width / rect.width;
+        const scaleY = this.canvas.height / rect.height;
+        let x, y;
+        if (e.offsetX !== undefined && e.offsetY !== undefined) {
+            // Use offsetX/offsetY if available (already in canvas coordinates)
+            x = e.offsetX * scaleX;
+            y = e.offsetY * scaleY;
+        } else {
+            // Fallback to clientX/clientY and convert to canvas coordinates
+            x = (e.clientX - rect.left) * scaleX;
+            y = (e.clientY - rect.top) * scaleY;
+        }
 
         const expected = this.idiomTarget[this.idiomClickIndex];
         for (const blk of this.currentBlocks) {
@@ -814,8 +833,10 @@ class Game {
                 continue;
             }
             const rect = blk.rect();
-            if (x >= rect.left && x < rect.right &&
-                y >= rect.top && y < rect.bottom) {
+            // Add small margin for easier clicking (5% of block size)
+            const margin = blk.size * 0.05;
+            if (x >= rect.left - margin && x < rect.right + margin &&
+                y >= rect.top - margin && y < rect.bottom + margin) {
                 if (blk.char === expected) {
                     if (!this.idiomClickedBlocks.includes(blk)) {
                         this.idiomClickedBlocks.push(blk);
