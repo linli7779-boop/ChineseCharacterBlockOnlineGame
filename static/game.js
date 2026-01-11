@@ -376,6 +376,7 @@ class Game {
         this.pinyinSuccessUntil = 0;
         this.usedChars = new Set();
         this.settledPinyin = new Map(); // Track pinyin by grid position
+        this.idiomHintEnabled = new Map(); // Track pronunciation hint per level
 
         // Speech synthesis state
         this.speechEnabled = false;
@@ -936,16 +937,71 @@ class Game {
         // Setup level menu for IDIOM mode (Levels 1-6)
         const idiomMenu = document.getElementById('level-menu-idiom');
         for (let i = 1; i <= 6; i++) {
-            const item = document.createElement('div');
-            item.className = 'level-menu-item';
-            item.textContent = `Level ${i}`;
-            item.addEventListener('click', (e) => {
+            // Create container for level options
+            const levelContainer = document.createElement('div');
+            levelContainer.className = 'idiom-level-container';
+            
+            // Level label
+            const levelLabel = document.createElement('div');
+            levelLabel.className = 'idiom-level-label';
+            levelLabel.textContent = `Level ${i}`;
+            levelContainer.appendChild(levelLabel);
+            
+            // With hint option
+            const withHintItem = document.createElement('div');
+            withHintItem.className = 'level-menu-item idiom-option';
+            withHintItem.textContent = 'With Hint';
+            withHintItem.dataset.level = i;
+            withHintItem.dataset.hint = 'true';
+            // Check if this option is selected (default: false)
+            if (this.idiomHintEnabled.get(i) === true) {
+                withHintItem.classList.add('selected');
+            }
+            withHintItem.addEventListener('click', (e) => {
                 e.stopPropagation();
+                // Read level from dataset to ensure correct value
+                const levelNum = parseInt(withHintItem.dataset.level, 10);
+                console.log(`With Hint clicked - level from dataset: ${levelNum}`);
+                // Update selected state
+                const allOptions = idiomMenu.querySelectorAll(
+                    `.idiom-option[data-level="${levelNum}"]`);
+                allOptions.forEach(opt => opt.classList.remove('selected'));
+                withHintItem.classList.add('selected');
                 this.closeAllLevelMenus();
                 this.hideAboutModal();
-                this.startMode(Mode.IDIOM, i);
+                this.idiomHintEnabled.set(levelNum, true);
+                this.startMode(Mode.IDIOM, levelNum);
             });
-            idiomMenu.appendChild(item);
+            levelContainer.appendChild(withHintItem);
+            
+            // Without hint option
+            const withoutHintItem = document.createElement('div');
+            withoutHintItem.className = 'level-menu-item idiom-option';
+            withoutHintItem.textContent = 'Without Hint';
+            withoutHintItem.dataset.level = i;
+            withoutHintItem.dataset.hint = 'false';
+            // Check if this option is selected (default: false, so this is default)
+            if (this.idiomHintEnabled.get(i) !== true) {
+                withoutHintItem.classList.add('selected');
+            }
+            withoutHintItem.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Read level from dataset to ensure correct value
+                const levelNum = parseInt(withoutHintItem.dataset.level, 10);
+                console.log(`Without Hint clicked - level from dataset: ${levelNum}`);
+                // Update selected state
+                const allOptions = idiomMenu.querySelectorAll(
+                    `.idiom-option[data-level="${levelNum}"]`);
+                allOptions.forEach(opt => opt.classList.remove('selected'));
+                withoutHintItem.classList.add('selected');
+                this.closeAllLevelMenus();
+                this.hideAboutModal();
+                this.idiomHintEnabled.set(levelNum, false);
+                this.startMode(Mode.IDIOM, levelNum);
+            });
+            levelContainer.appendChild(withoutHintItem);
+            
+            idiomMenu.appendChild(levelContainer);
         }
     }
 
@@ -1209,8 +1265,9 @@ class Game {
             console.log(`Selected idiom: ${target}`);
             this.idiomTarget = target;
             
-            // Speak the idiom (hints always enabled)
-            if (target) {
+            // Speak the idiom if pronunciation hint is enabled
+            const hintEnabled = this.idiomHintEnabled.get(this.level) === true;
+            if (hintEnabled && target) {
                 this.speakChinese(target);
             }
             
@@ -1336,6 +1393,17 @@ class Game {
                         (this.mode === Mode.ROTATE || this.mode === Mode.PINYIN)) {
                         this.speakChinese(blk.char);
                     }
+                    // For idiom mode without hint, speak when blocks reach bottom
+                    if (this.mode === Mode.IDIOM && this.idiomTarget) {
+                        const hintEnabled = this.idiomHintEnabled.get(this.level) === true;
+                        if (!hintEnabled) {
+                            // Speak the idiom when all blocks reach bottom
+                            if (this.currentBlocks.length === 1) {
+                                // Last block reaching bottom, speak the idiom
+                                this.speakChinese(this.idiomTarget);
+                            }
+                        }
+                    }
                     this.currentBlocks = this.currentBlocks.filter(
                         b => b !== blk);
                     if (this.mode === Mode.PINYIN) {
@@ -1399,6 +1467,11 @@ class Game {
                                 (this.mode === Mode.ROTATE || this.mode === Mode.PINYIN)) {
                                 this.speakChinese(blk.char);
                             }
+                            // For idiom mode without hint, speak when blocks reach bottom
+                            if (this.mode === Mode.IDIOM && this.idiomTarget) {
+                                const hintEnabled = this.idiomHintEnabled.get(this.level) === true;
+                                if (!hintEnabled) {
+                                    // Speak the idiom when all blocks reach bottom
                                     if (this.currentBlocks.length === 1) {
                                         // Last block reaching bottom, speak the idiom
                                         this.speakChinese(this.idiomTarget);
@@ -1474,6 +1547,17 @@ class Game {
                         this.spawnRound();
                     } else if (this.mode === Mode.IDIOM) {
                         this.grid.settle(blk);
+                        // For idiom mode without hint, speak when all blocks settle
+                        if (this.idiomTarget) {
+                            const hintEnabled = this.idiomHintEnabled.get(this.level) === true;
+                            if (!hintEnabled) {
+                                // Speak the idiom when all blocks settle
+                                if (this.currentBlocks.length === 1) {
+                                    // Last block settling, speak the idiom
+                                    this.speakChinese(this.idiomTarget);
+                                }
+                            }
+                        }
                         this.currentBlocks = this.currentBlocks.filter(
                             b => b !== blk);
                         if (this.currentBlocks.length === 0) {
