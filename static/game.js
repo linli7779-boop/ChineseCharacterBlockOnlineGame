@@ -834,9 +834,19 @@ class Game {
         const rect = this.canvas.getBoundingClientRect();
         const scaleX = this.canvas.width / rect.width;
         const scaleY = this.canvas.height / rect.height;
-        // Always use clientX/clientY for consistency
-        const x = (e.clientX - rect.left) * scaleX;
-        const y = (e.clientY - rect.top) * scaleY;
+
+        let x, y;
+        if (typeof e.clientX !== 'undefined') {
+            // Mouse event
+            x = (e.clientX - rect.left) * scaleX;
+            y = (e.clientY - rect.top) * scaleY;
+        } else if (typeof e.offsetX !== 'undefined') {
+            // Custom object or simple event
+            x = e.offsetX * scaleX;
+            y = e.offsetY * scaleY;
+        } else {
+            return;
+        }
 
         const expected = this.idiomTarget[this.idiomClickIndex];
         for (const blk of this.currentBlocks) {
@@ -845,8 +855,8 @@ class Game {
                 continue;
             }
             const blkRect = blk.rect();
-            // Add larger margin for easier clicking (30% of block size)
-            const margin = blk.size * 0.3;
+            // Add larger margin for easier clicking (40% of block size)
+            const margin = blk.size * 0.4;
             if (x >= blkRect.left - margin && x < blkRect.right + margin &&
                 y >= blkRect.top - margin && y < blkRect.bottom + margin) {
                 if (blk.char === expected) {

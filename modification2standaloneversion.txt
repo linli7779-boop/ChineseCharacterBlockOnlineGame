@@ -80,6 +80,10 @@ in mode idiom, for an idiom longer than four characters, the game doesn't show a
 
 If two idioms are stacked up at the bottom of the screen, there are no more idioms showing up and the game stops. Please fix it.
 
+Please update the level number at the top-right corner right away once a level is selected in any of the three modes.
+
+In mode "idiom", sometimes when a character is clicked, it still doesn't recognize the click and the green box doesn't show up after many clicks until it falls to the bottom half. please check and fix it.
+
 1. deactivate default base environment
 conda deactivate base
 2. set the policy:
