@@ -13,7 +13,8 @@ body {
     overflow: hidden;
     background: #87CEEB;
     width: 100vw;
-    height: 100dvh; /* Use dynamic viewport height for mobile */
+    height: 100dvh;
+    /* Use dynamic viewport height for mobile */
     position: fixed;
     top: 0;
     left: 0;
@@ -24,7 +25,8 @@ body {
 #game-container {
     position: relative;
     width: 100vw;
-    height: 100dvh; /* Use dynamic viewport height for mobile */
+    height: 100dvh;
+    /* Use dynamic viewport height for mobile */
     display: flex;
     overflow: hidden;
     margin: 0;
@@ -52,6 +54,8 @@ body {
     gap: 20px;
     padding: 40px 10px 20px 10px;
     z-index: 10;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .game-btn-container {
@@ -89,10 +93,12 @@ body {
     max-height: 300px;
     overflow-y: auto;
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
     z-index: 100;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overscroll-behavior: contain; /* Prevent scroll chaining */
+    overscroll-behavior: contain;
+    /* Prevent scroll chaining */
 }
 
 .level-menu.show {
@@ -106,10 +112,12 @@ body {
     color: #000;
     border-bottom: 1px solid #E0E0E0;
     transition: background 0.2s;
-    touch-action: pan-y; /* Allow vertical scrolling while preventing default touch actions */
+    touch-action: pan-y;
+    /* Allow vertical scrolling while preventing default touch actions */
     user-select: none;
     -webkit-user-select: none;
-    min-height: 44px; /* Minimum touch target size */
+    min-height: 44px;
+    /* Minimum touch target size */
     display: flex;
     align-items: center;
 }
@@ -141,7 +149,8 @@ body {
 }
 
 .idiom-option {
-    padding-left: 32px; /* Indent options under level label */
+    padding-left: 32px;
+    /* Indent options under level label */
 }
 
 .idiom-option.selected {
@@ -245,10 +254,12 @@ body {
 
 #pinyin-options-container {
     position: absolute;
-    left: calc(20% + 10px); /* Start after sidebar with small gap */
+    left: calc(20% + 10px);
+    /* Start after sidebar with small gap */
     top: 50%;
     transform: translateY(-50%);
-    display: none; /* Hidden by default, shown when PINYIN mode */
+    display: none;
+    /* Hidden by default, shown when PINYIN mode */
     flex-direction: column;
     gap: 12px;
     z-index: 15;
@@ -378,7 +389,8 @@ body {
     align-items: center;
     gap: 4px;
     flex: 1;
-    min-width: 0; /* Allow flex item to shrink */
+    min-width: 0;
+    /* Allow flex item to shrink */
     overflow: hidden;
 }
 
@@ -565,49 +577,64 @@ body {
 
 @media (max-width: 768px) {
     .game-btn-container {
-        overflow: visible; /* Allow menu to extend beyond container */
+        overflow: visible;
+        /* Allow menu to extend beyond container */
     }
-    
+
     .level-menu {
-        max-height: 60vh; /* Use viewport height for better mobile support */
-        max-height: calc(100vh - 200px); /* Ensure it doesn't exceed screen */
+        max-height: 60vh;
+        /* Use viewport height for better mobile support */
+        max-height: calc(100vh - 200px);
+        /* Ensure it doesn't exceed screen */
         overflow-y: auto;
         overflow-x: hidden;
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scrolling on iOS */
         overscroll-behavior: contain;
-        touch-action: pan-y; /* Enable vertical scrolling on touch */
-        min-width: 280px; /* Ensure minimum width to prevent truncation */
-        width: 280px; /* Fixed width wider to show full text including "Without Hint" */
-        max-width: calc(100vw - 40px); /* Prevent overflow beyond viewport */
+        touch-action: pan-y;
+        /* Enable vertical scrolling on touch */
+        min-width: 280px;
+        /* Ensure minimum width to prevent truncation */
+        width: 280px;
+        /* Fixed width wider to show full text including "Without Hint" */
+        max-width: calc(100vw - 40px);
+        /* Prevent overflow beyond viewport */
         left: 0;
-        right: auto; /* Override right: 0 to allow expansion */
+        right: auto;
+        /* Override right: 0 to allow expansion */
     }
 
     .level-menu-item {
         padding: 10px 12px;
         font-size: 16px;
-        min-height: 44px; /* Ensure touch targets are large enough */
+        min-height: 44px;
+        /* Ensure touch targets are large enough */
         display: flex;
         align-items: center;
-        white-space: nowrap; /* Prevent text wrapping */
-        overflow: visible; /* Allow text to be visible */
+        white-space: nowrap;
+        /* Prevent text wrapping */
+        overflow: visible;
+        /* Allow text to be visible */
     }
-    
+
     .idiom-level-label {
         font-size: 14px;
         padding: 6px 12px;
     }
-    
+
     .idiom-option {
         font-size: 16px;
         padding: 10px 12px 10px 28px;
         min-height: 40px;
-        white-space: nowrap; /* Prevent text wrapping */
-        overflow: visible; /* Allow text to be visible */
+        white-space: nowrap;
+        /* Prevent text wrapping */
+        overflow: visible;
+        /* Allow text to be visible */
     }
-    
+
     #pinyin-options-container {
-        left: 20%; /* Start after sidebar */
+        left: 20%;
+        /* Start after sidebar */
         gap: 8px;
         padding: 5px;
     }
@@ -617,97 +644,98 @@ body {
         font-size: 14px;
         min-width: 80px;
     }
+
     #controls {
         width: 30%;
         padding: 8px;
         padding-top: 40px;
     }
-    
+
     #control-buttons {
         max-width: 120px;
         gap: 6px;
     }
-    
+
     .control-btn {
         width: 35px;
         height: 35px;
         font-size: 18px;
     }
-    
+
     #score {
         font-size: 16px;
     }
-    
+
     #level {
         font-size: 11px;
     }
-    
+
     #about-container {
         width: 100%;
         max-width: 100%;
     }
-    
+
     .about-button {
         height: 50px;
         font-size: 16px;
     }
-    
+
     .about-modal-content {
         padding: 20px;
         max-width: 90%;
         max-height: 85vh;
     }
-    
+
     .about-text {
         font-size: 14px;
         line-height: 1.6;
     }
-    
+
     .video-modal-content {
         width: 95%;
         max-width: 95%;
     }
-    
+
     .close-video-btn {
         top: -35px;
         width: 35px;
         height: 35px;
         font-size: 24px;
     }
-    
+
     .donation-title {
         font-size: 12px;
     }
-    
+
     .donation-text {
         font-size: 9px;
         max-width: 100%;
         line-height: 1.15;
     }
-    
+
     .donation-button {
         padding: 6px 8px;
         min-height: 50px;
         max-width: 100%;
         gap: 4px;
     }
-    
+
     .donation-content {
         width: 100%;
         gap: 2px;
         flex: 1;
         min-width: 0;
     }
-    
+
     #instruction-text {
         font-size: 14px;
     }
-    
+
     #donation-container {
         width: 95%;
         max-width: 100%;
     }
-    
+
     #sidebar {
         width: 20%;
         padding: 15px 4px 8px 4px;
@@ -715,23 +743,23 @@ body {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
-    
+
     .game-btn {
         height: 42px;
         font-size: 16px;
         width: 100%;
     }
-    
+
     #control-buttons #btn-demo {
-        width: 50px;
+        width: 100%;
         height: 50px;
         font-size: 16px;
     }
-    
+
     #donation-container {
         width: 100%;
     }
-    
+
     #instruction-container {
         padding: 8px;
         min-height: 60px;
@@ -739,4 +767,3 @@ body {
         width: 100%;
     }
 }
-

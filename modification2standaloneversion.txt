@@ -86,6 +86,8 @@ In mode "idiom", sometimes when a character is clicked, it still doesn't recogni
 
 The randomly picked characters and idioms should not be picked twice in all modes. please modify the code.
 
+on my cell phone, the demo button is not fully stretched when the device is in the portrain orientation and the donation button disappears when the device is in the landscape orientation. Please adjust them automaticaly when it's played on mobile devices.
+
 1. deactivate default base environment
 conda deactivate base
 2. set the policy:
