@@ -64,9 +64,17 @@ on mobile devices, the game doesn't pronounce the characters when the characters
 
 please provide two options for each level of the subgame "idiom", one is pronouncation hint which pronounces the idiom when the idiom shows up and before the player starts to click, the other option is without pronouncation hint which pronounces after the player makes the correct choice or when the idiom touches the bottom of the screen
 
-please expand the width of the pulldown menu for each game button because it is truncated on mobile devices
+please expand the width of the pulldown menu for each game button because it is truncated on mobile devices.
 
 on mobile devices, the idiom pulldown menu text "with hint" and "without hint" are still truncated, please fix that.
+
+scale down the falling rate of mode "idiom" to one fifth of current rate.
+
+improve the responsiveness of mouse click in mode "idiom".
+
+The right way that mode "idiom" works should be when level 1 is selected from the pull-down menu, the idioms from file "idiom_level1.json" should be randomly picked; when level 2 is selected from the pull-down menu, the idioms from file "idiom_level2.json" should be randomly picked; when level 3 is selected from the pull-down menu, the idioms from file "idiom_level3.json" should be randomly picked; when level 4 is selected from the pull-down menu, the idioms from file "idiom_level4.json" should be randomly picked; when level 5 is selected from the pull-down menu, the idioms from file "idiom_level5.json" should be randomly picked; when level 6 is selected from the pull-down menu, the idioms from file "idiom_level6.json" should be randomly picked. But the mode currently doesn't work this way. Please make sure the selected level is properly recognized and passed through the code.
+
+
 
 1. deactivate default base environment
 conda deactivate base

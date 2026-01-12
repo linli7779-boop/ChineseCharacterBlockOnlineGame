@@ -55,50 +55,50 @@ function generateWrongTone(pinyin) {
     const toneChars = 'āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü';
     let result = pinyin;
     let foundTone = false;
-    
+
     for (let i = 0; i < result.length; i++) {
         if (toneChars.includes(result[i])) {
             const baseVowel = stripToneMarks(result[i]);
             const currentTone = toneChars.indexOf(result[i]) % 4 + 1;
             let newTone = (currentTone % 4) + 1; // Next tone
-            result = result.substring(0, i) + 
-                setToneMark(baseVowel, newTone) + 
+            result = result.substring(0, i) +
+                setToneMark(baseVowel, newTone) +
                 result.substring(i + 1);
             foundTone = true;
             break;
         }
     }
-    
+
     // If no tone mark found, add one
     if (!foundTone) {
         const vowels = 'aeiouv';
         for (let i = 0; i < result.length; i++) {
             if (vowels.includes(result[i].toLowerCase())) {
-                result = result.substring(0, i) + 
-                    setToneMark(result[i], 2) + 
+                result = result.substring(0, i) +
+                    setToneMark(result[i], 2) +
                     result.substring(i + 1);
                 break;
             }
         }
     }
-    
+
     return result;
 }
 
 // Generate wrong initial pinyin
 function generateWrongInitial(pinyin) {
-    const initials = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 
-                      'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 
-                      'sh', 'r', 'z', 'c', 's', 'y', 'w'];
-    const wrongInitials = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 
-                           'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 
-                           'sh', 'r', 'z', 'c', 's', 'y', 'w'];
-    
+    const initials = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l',
+        'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch',
+        'sh', 'r', 'z', 'c', 's', 'y', 'w'];
+    const wrongInitials = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l',
+        'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch',
+        'sh', 'r', 'z', 'c', 's', 'y', 'w'];
+
     let stripped = stripToneMarks(pinyin);
     let currentInitial = '';
-    
+
     // Extract initial (first 1-2 characters)
-    if (stripped.startsWith('zh') || stripped.startsWith('ch') || 
+    if (stripped.startsWith('zh') || stripped.startsWith('ch') ||
         stripped.startsWith('sh')) {
         currentInitial = stripped.substring(0, 2);
         stripped = stripped.substring(2);
@@ -106,14 +106,14 @@ function generateWrongInitial(pinyin) {
         currentInitial = stripped[0];
         stripped = stripped.substring(1);
     }
-    
+
     // Find a different initial
     let newInitial = currentInitial;
     while (newInitial === currentInitial && wrongInitials.length > 1) {
         newInitial = wrongInitials[
             Math.floor(Math.random() * wrongInitials.length)];
     }
-    
+
     // Reconstruct with tone mark
     const toneChar = getToneMark(pinyin);
     if (toneChar) {
@@ -123,7 +123,7 @@ function generateWrongInitial(pinyin) {
         const newToneChar = setToneMark(baseVowel, tone);
         return newInitial + stripped.replace(baseVowel, newToneChar);
     }
-    
+
     return newInitial + stripped;
 }
 
@@ -131,12 +131,12 @@ function generateWrongInitial(pinyin) {
 function generateWrongVowel(pinyin) {
     const vowels = ['a', 'e', 'i', 'o', 'u', 'v'];
     const wrongVowels = ['a', 'e', 'i', 'o', 'u', 'v'];
-    
+
     let stripped = stripToneMarks(pinyin);
     let toneChar = getToneMark(pinyin);
     let baseVowel = '';
     let vowelIndex = -1;
-    
+
     // Find the vowel with tone mark
     if (toneChar) {
         baseVowel = stripToneMarks(toneChar);
@@ -156,7 +156,7 @@ function generateWrongVowel(pinyin) {
             }
         }
     }
-    
+
     if (vowelIndex >= 0) {
         // Find a different vowel
         let newVowel = baseVowel;
@@ -164,22 +164,22 @@ function generateWrongVowel(pinyin) {
             newVowel = wrongVowels[
                 Math.floor(Math.random() * wrongVowels.length)];
         }
-        
+
         // Preserve tone if exists
         if (toneChar) {
             const toneIndex = 'āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü'.indexOf(toneChar);
             const tone = toneIndex >= 0 ? (toneIndex % 4) + 1 : 1;
             const newToneChar = setToneMark(newVowel, tone);
-            return stripped.substring(0, vowelIndex) + 
-                newToneChar + 
+            return stripped.substring(0, vowelIndex) +
+                newToneChar +
                 stripped.substring(vowelIndex + 1);
         }
-        
-        return stripped.substring(0, vowelIndex) + 
-            newVowel + 
+
+        return stripped.substring(0, vowelIndex) +
+            newVowel +
             stripped.substring(vowelIndex + 1);
     }
-    
+
     return pinyin; // Fallback
 }
 
@@ -191,16 +191,16 @@ function generatePinyinOptions(correctPinyin) {
         generateWrongInitial(correctPinyin),
         generateWrongVowel(correctPinyin)
     ];
-    
+
     // Shuffle array
     for (let i = options.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [options[i], options[j]] = [options[j], options[i]];
     }
-    
+
     // Find correct index after shuffling
     const correctIndex = options.indexOf(correctPinyin);
-    
+
     return { options, correctIndex };
 }
 
@@ -252,14 +252,14 @@ class Grid {
     }
 
     canMove(rect) {
-        if (rect.left < this.left || 
+        if (rect.left < this.left ||
             rect.right > this.left + this.width) {
             return false;
         }
         if (rect.bottom > this.top + this.height) {
             return false;
         }
-        const c0 = Math.max(0, 
+        const c0 = Math.max(0,
             Math.floor((rect.left - this.left) / this.cell));
         const c1 = Math.min(this.cols - 1,
             Math.floor((rect.right - 1 - this.left) / this.cell));
@@ -308,17 +308,17 @@ class Game {
     constructor() {
         this.canvas = document.getElementById('game-canvas');
         this.ctx = this.canvas.getContext('2d');
-        
+
         // Set initial canvas size
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        
+
         this.resizeCanvas();
         window.addEventListener('resize', () => this.resizeCanvas());
 
         this.charLevels = [];
         this.idiomLevels = [];
-        this.loadLevelData();
+        this.idiomLevels = [];
 
         this.running = true;
         this.mode = null;
@@ -333,7 +333,7 @@ class Game {
         // Layout - will be set by resizeCanvas
         this.width = this.canvas.width;
         this.height = this.canvas.height;
-        
+
         // Initial sizing - resizeCanvas will handle proper sizing
         const isMobile = this.isMobile();
         if (isMobile) {
@@ -342,7 +342,7 @@ class Game {
             this.sidebarW = Math.floor(this.width / 5);
         }
         this.playW = this.width - this.sidebarW;
-        
+
         let blockSize;
         if (isMobile) {
             const minCols = 7;
@@ -353,11 +353,11 @@ class Game {
         } else {
             blockSize = Math.floor(this.height / 10);
         }
-        
+
         // Cut first column: grid starts one blockSize to the right
         const gridLeft = this.sidebarW + blockSize;
         const gridWidth = this.playW - blockSize;
-        
+
         this.grid = new Grid(
             gridLeft, 0, gridWidth, this.height, blockSize
         );
@@ -422,7 +422,7 @@ class Game {
 
     getFontSize(baseSize) {
         // Scale font size based on screen width
-        const scale = this.isMobile() ? 
+        const scale = this.isMobile() ?
             Math.min(window.innerWidth / 400, 1.0) : 1.0;
         return Math.max(Math.floor(baseSize * scale), 12);
     }
@@ -436,7 +436,7 @@ class Game {
         this.canvas.height = vh;
         this.width = this.canvas.width;
         this.height = this.canvas.height;
-        
+
         // Calculate sidebar width first
         if (isMobile) {
             this.sidebarW = Math.floor(this.width * 0.20);
@@ -444,7 +444,7 @@ class Game {
             this.sidebarW = Math.floor(this.width / 5);
         }
         this.playW = this.width - this.sidebarW;
-        
+
         // Calculate block size
         let blockSize;
         if (isMobile) {
@@ -456,12 +456,12 @@ class Game {
         } else {
             blockSize = Math.floor(this.height / 10);
         }
-        
+
         // Cut first column: grid starts one blockSize to the right of sidebar
         // This visually cuts off the first column of the grid
         const gridLeft = this.sidebarW + blockSize;
         const gridWidth = this.playW - blockSize; // Reduce width by one column
-        
+
         if (this.grid) {
             this.grid = new Grid(
                 gridLeft, 0, gridWidth, this.height, blockSize
@@ -473,6 +473,8 @@ class Game {
     }
 
     async loadLevelData() {
+        this.charLevels = [];
+        this.idiomLevels = [];
         // Load character levels
         for (let i = 1; i <= 14; i++) {
             try {
@@ -746,7 +748,7 @@ class Game {
             const rect = this.canvas.getBoundingClientRect();
             const x = touch.clientX - rect.left;
             const y = touch.clientY - rect.top;
-            this.onCanvasClick({offsetX: x, offsetY: y});
+            this.onCanvasClick({ offsetX: x, offsetY: y });
         });
     }
 
@@ -837,10 +839,10 @@ class Game {
                     this.idiomClickIndex++;
                     if (this.idiomClickIndex >= this.idiomTarget.length) {
                         let allCorrect = true;
-                        if (this.idiomClickedBlocks.length === 
+                        if (this.idiomClickedBlocks.length ===
                             this.idiomTarget.length) {
                             for (let i = 0; i < this.idiomClickedBlocks.length;
-                                 i++) {
+                                i++) {
                                 if (this.idiomClickedBlocks[i].char !==
                                     this.idiomTarget[i]) {
                                     allCorrect = false;
@@ -852,21 +854,21 @@ class Game {
                         }
 
                         if (allCorrect) {
-                            for (const clickedBlk of 
-                                 this.idiomClickedBlocks) {
+                            for (const clickedBlk of
+                                this.idiomClickedBlocks) {
                                 clickedBlk.settled = true;
                                 clickedBlk.vy = 0;
                             }
-                            const groupX = this.grid.left + 
+                            const groupX = this.grid.left +
                                 Math.floor(this.grid.width / 2) -
                                 Math.floor(
-                                    (this.idiomClickedBlocks.length * 
-                                     blk.size) / 2
+                                    (this.idiomClickedBlocks.length *
+                                        blk.size) / 2
                                 );
                             const groupY = this.grid.top + this.grid.cell;
-                            for (let i = 0; 
-                                 i < this.idiomClickedBlocks.length; i++) {
-                                this.idiomClickedBlocks[i].x = 
+                            for (let i = 0;
+                                i < this.idiomClickedBlocks.length; i++) {
+                                this.idiomClickedBlocks[i].x =
                                     groupX + i * blk.size;
                                 this.idiomClickedBlocks[i].y = groupY;
                             }
@@ -877,8 +879,8 @@ class Game {
                             this.awardPoints();
                             this.idiomSuccessUntil = Date.now() + 1000;
                         } else {
-                            for (const clickedBlk of 
-                                 this.idiomClickedBlocks) {
+                            for (const clickedBlk of
+                                this.idiomClickedBlocks) {
                                 if (this.currentBlocks.includes(clickedBlk)) {
                                     clickedBlk.settled = false;
                                     clickedBlk.vy = this.fallSpeed * 0.1;
@@ -954,7 +956,7 @@ class Game {
     toggleLevelMenu(mode) {
         // Close all menus first
         this.closeAllLevelMenus();
-        
+
         // Toggle the selected menu
         const menuId = `level-menu-${mode}`;
         const menu = document.getElementById(menuId);
@@ -1052,7 +1054,7 @@ class Game {
     setTargetRight() {
         if (this.mode === Mode.ROTATE || this.mode === Mode.PINYIN) {
             const dataset = this.charLevels[this.level - 1] || {};
-            const n = Math.max(1, 
+            const n = Math.max(1,
                 Math.floor(Object.keys(dataset).length * 0.1));
             this.targetRight = n;
         } else {
@@ -1095,16 +1097,16 @@ class Game {
         }
 
         let cx, cy;
-        if (this.mode === Mode.IDIOM && 
+        if (this.mode === Mode.IDIOM &&
             this.idiomClickedBlocks.length > 0) {
             const firstBlk = this.idiomClickedBlocks[0];
             const lastBlk = this.idiomClickedBlocks[
                 this.idiomClickedBlocks.length - 1];
             cx = Math.floor((firstBlk.x + lastBlk.x + lastBlk.size) / 2);
             cy = firstBlk.y + Math.floor(firstBlk.size / 2);
-        } else if ((this.mode === Mode.ROTATE || 
-                    this.mode === Mode.PINYIN) &&
-                   this.currentBlocks.length > 0) {
+        } else if ((this.mode === Mode.ROTATE ||
+            this.mode === Mode.PINYIN) &&
+            this.currentBlocks.length > 0) {
             const blk = this.currentBlocks[0];
             cx = blk.x + Math.floor(blk.size / 2);
             cy = blk.y + Math.floor(blk.size / 2);
@@ -1168,7 +1170,7 @@ class Game {
                 angle = [90, 180, 270][
                     Math.floor(Math.random() * 3)];
             }
-            const x = this.grid.left + 
+            const x = this.grid.left +
                 Math.floor(Math.random() * this.grid.cols) * size;
             const block = new Block(
                 Math.min(x, this.grid.left + this.grid.width - size),
@@ -1177,10 +1179,10 @@ class Game {
             this.currentBlocks.push(block);
             this.currentChar = ch;
             this.currentPinyin = py;
-            
+
             // Generate pinyin options for PINYIN mode
             if (this.mode === Mode.PINYIN && py) {
-                const { options, correctIndex } = 
+                const { options, correctIndex } =
                     generatePinyinOptions(py);
                 this.pinyinOptions = options;
                 this.pinyinCorrectIndex = correctIndex;
@@ -1210,13 +1212,13 @@ class Game {
             const target = idioms[Math.floor(Math.random() * idioms.length)];
             console.log(`Selected idiom: ${target}`);
             this.idiomTarget = target;
-            
+
             // Speak the idiom if pronunciation hint is enabled
             const hintEnabled = this.idiomHintEnabled.get(this.level) === true;
             if (hintEnabled && target) {
                 this.speakChinese(target);
             }
-            
+
             const chars = target.split('');
             const originalChars = [...chars];
             for (let i = 0; i < 10; i++) {
@@ -1230,7 +1232,7 @@ class Game {
             }
             const cols = [];
             const availableCols = Array.from(
-                {length: this.grid.cols}, (_, i) => i);
+                { length: this.grid.cols }, (_, i) => i);
             for (let i = 0; i < Math.min(4, this.grid.cols); i++) {
                 const idx = Math.floor(
                     Math.random() * availableCols.length);
@@ -1281,15 +1283,15 @@ class Game {
                 }
             }
 
-            const speedY = (this.controlButtons.down || 
-                           this.keys['ArrowDown'] || 
-                           this.keys['Down']) ? 
-                           this.fastFallSpeed : this.fallSpeed;
+            const speedY = (this.controlButtons.down ||
+                this.keys['ArrowDown'] ||
+                this.keys['Down']) ?
+                this.fastFallSpeed : this.fallSpeed;
             let actualSpeedY = speedY;
             if (this.mode === Mode.IDIOM) {
                 actualSpeedY = speedY * 0.1; // One fifth of previous 0.5 rate
-            } else if (this.mode === Mode.ROTATE || 
-                      this.mode === Mode.PINYIN) {
+            } else if (this.mode === Mode.ROTATE ||
+                this.mode === Mode.PINYIN) {
                 // Slow down falling rate for ROTATE and PINYIN modes
                 actualSpeedY = speedY * 0.5;
             }
@@ -1335,7 +1337,7 @@ class Game {
                             `${gridX},${gridY}`, this.currentPinyin);
                     }
                     // Speak character when it reaches the bottom
-                    if (blk.char && 
+                    if (blk.char &&
                         (this.mode === Mode.ROTATE || this.mode === Mode.PINYIN)) {
                         this.speakChinese(blk.char);
                     }
@@ -1368,7 +1370,7 @@ class Game {
                     Math.floor((blk.x - this.grid.left) / this.grid.cell));
                 const c1 = Math.min(this.grid.cols - 1,
                     Math.floor((blk.x + blk.size - 1 - this.grid.left) /
-                               this.grid.cell));
+                        this.grid.cell));
                 const currentRow = Math.floor(
                     (bottomY - this.grid.top) / this.grid.cell);
                 let blockBelow = false;
@@ -1378,7 +1380,7 @@ class Game {
                     for (let c = c0; c <= c1; c++) {
                         if (this.grid.occupied[rowBelow][c] !== null) {
                             blockBelow = true;
-                            const targetY = this.grid.top + 
+                            const targetY = this.grid.top +
                                 rowBelow * this.grid.cell - blk.size;
                             blk.y = targetY;
                             blk.vy = 0;
@@ -1396,20 +1398,20 @@ class Game {
                                 }
                             }
                             this.grid.settle(blk);
-                            if (this.mode === Mode.PINYIN && 
+                            if (this.mode === Mode.PINYIN &&
                                 this.currentPinyin) {
                                 const gridX = Math.floor(
-                                    (blk.x - this.grid.left) / 
+                                    (blk.x - this.grid.left) /
                                     this.grid.cell);
                                 const gridY = Math.floor(
-                                    (blk.y - this.grid.top) / 
+                                    (blk.y - this.grid.top) /
                                     this.grid.cell);
                                 this.settledPinyin.set(
-                                    `${gridX},${gridY}`, 
+                                    `${gridX},${gridY}`,
                                     this.currentPinyin);
                             }
                             // Speak character when it reaches the bottom
-                            if (blk.char && 
+                            if (blk.char &&
                                 (this.mode === Mode.ROTATE || this.mode === Mode.PINYIN)) {
                                 this.speakChinese(blk.char);
                             }
@@ -1453,7 +1455,7 @@ class Game {
                 } else {
                     let gridY = Math.floor(
                         (blk.y - this.grid.top) / this.grid.cell);
-                    gridY = Math.max(0, 
+                    gridY = Math.max(0,
                         Math.min(this.grid.rows - 1, gridY));
                     const targetY = this.grid.top + gridY * this.grid.cell;
                     blk.y = targetY;
@@ -1652,7 +1654,7 @@ class Game {
         if (this.mode === Mode.IDIOM &&
             this.idiomClickedBlocks.length > 0 &&
             (this.idiomSuccessUntil === 0 ||
-             Date.now() < this.idiomSuccessUntil)) {
+                Date.now() < this.idiomSuccessUntil)) {
             for (const blk of this.idiomClickedBlocks) {
                 this.drawBlock(blk.x, blk.y, blk.size, blk.char, blk.angle);
             }
@@ -1684,8 +1686,8 @@ class Game {
             this.ctx.strokeStyle = '#FF8C00';
             this.ctx.lineWidth = 2;
             this.ctx.beginPath();
-            this.ctx.arc(effect.x, effect.y, 
-                        Math.max(1, effect.radius), 0, Math.PI * 2);
+            this.ctx.arc(effect.x, effect.y,
+                Math.max(1, effect.radius), 0, Math.PI * 2);
             this.ctx.stroke();
         }
     }
@@ -1702,7 +1704,7 @@ class Game {
         // Use a larger font size and ensure Chinese fonts are available
         // Scale font size based on block size and screen size
         const baseFontSize = Math.max(size - 8, this.getFontSize(20));
-        const fontSize = this.isMobile() ? 
+        const fontSize = this.isMobile() ?
             Math.max(baseFontSize * 0.9, size * 0.6) : baseFontSize;
         this.ctx.font = `${fontSize}px 'SimHei', 'Microsoft YaHei', 'SimSun', 'STHeiti', 'Arial Unicode MS', Arial, sans-serif`;
         this.ctx.textAlign = 'center';
@@ -1712,15 +1714,15 @@ class Game {
         } catch (e) {
             console.error('Error drawing character:', ch, e);
             // Fallback: draw a box
-            this.ctx.fillRect(-size/4, -size/4, size/2, size/2);
+            this.ctx.fillRect(-size / 4, -size / 4, size / 2, size / 2);
         }
         this.ctx.restore();
     }
 
     updateScoreDisplay() {
-        document.getElementById('score').textContent = 
+        document.getElementById('score').textContent =
             `Score: ${this.score}`;
-        document.getElementById('level').textContent = 
+        document.getElementById('level').textContent =
             `Level: ${this.level}`;
     }
 
@@ -1736,12 +1738,12 @@ class Game {
     }
 
     handlePinyinOptionClick(index) {
-        if (this.mode !== Mode.PINYIN || 
+        if (this.mode !== Mode.PINYIN ||
             this.pinyinOptions.length === 0 ||
             this.pinyinCorrectIndex < 0) {
             return;
         }
-        
+
         if (index === this.pinyinCorrectIndex) {
             // Correct answer
             this.awardPoints();
@@ -1754,8 +1756,8 @@ class Game {
     updatePinyinButtons() {
         const container = document.getElementById('pinyin-options-container');
         if (!container) return;
-        
-        if (this.mode === Mode.PINYIN && 
+
+        if (this.mode === Mode.PINYIN &&
             this.pinyinOptions.length === 4) {
             container.style.display = 'flex';
             for (let i = 0; i < 4; i++) {
@@ -1780,7 +1782,7 @@ class Game {
         if (!this.speechEnabled || this.speechQueue.length === 0) {
             return;
         }
-        
+
         while (this.speechQueue.length > 0) {
             const text = this.speechQueue.shift();
             this.speakChineseInternal(text);
@@ -1789,13 +1791,13 @@ class Game {
 
     speakChinese(text) {
         if (!text) return;
-        
+
         // If speech is not enabled yet, queue it
         if (!this.speechEnabled) {
             this.speechQueue.push(text);
             return;
         }
-        
+
         this.speakChineseInternal(text);
     }
 
@@ -1804,25 +1806,25 @@ class Game {
         if (!('speechSynthesis' in window) || !text) {
             return;
         }
-        
+
         try {
             // Cancel any ongoing speech to avoid overlap
             window.speechSynthesis.cancel();
-            
+
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'zh-CN'; // Chinese (Mandarin)
             utterance.rate = 0.8; // Slightly slower for clarity
             utterance.pitch = 1.0;
             utterance.volume = 1.0;
-            
+
             // Function to set voice and speak
             const speakWithVoice = () => {
                 try {
                     // Try to find a Chinese voice if available
                     const voices = window.speechSynthesis.getVoices();
                     if (voices.length > 0) {
-                        const chineseVoice = voices.find(voice => 
-                            voice.lang.startsWith('zh') || 
+                        const chineseVoice = voices.find(voice =>
+                            voice.lang.startsWith('zh') ||
                             voice.name.toLowerCase().includes('chinese')
                         );
                         if (chineseVoice) {
@@ -1834,7 +1836,7 @@ class Game {
                     console.warn('Error speaking:', e);
                 }
             };
-            
+
             // On mobile, voices may need time to load
             if (this.voicesLoaded) {
                 speakWithVoice();
