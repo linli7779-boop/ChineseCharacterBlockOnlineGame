@@ -1535,11 +1535,6 @@ class Game {
                                 }
                             }
                         }
-                        this.currentBlocks = this.currentBlocks.filter(
-                            b => b !== blk);
-                        if (this.currentBlocks.length === 0) {
-                            this.spawnRound();
-                        }
                     } else {
                         this.grid.settle(blk);
                     }
