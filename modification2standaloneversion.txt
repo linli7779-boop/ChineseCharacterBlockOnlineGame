@@ -74,7 +74,7 @@ improve the responsiveness of mouse click in mode "idiom".
 
 The right way that mode "idiom" works should be when level 1 is selected from the pull-down menu, the idioms from file "idiom_level1.json" should be randomly picked; when level 2 is selected from the pull-down menu, the idioms from file "idiom_level2.json" should be randomly picked; when level 3 is selected from the pull-down menu, the idioms from file "idiom_level3.json" should be randomly picked; when level 4 is selected from the pull-down menu, the idioms from file "idiom_level4.json" should be randomly picked; when level 5 is selected from the pull-down menu, the idioms from file "idiom_level5.json" should be randomly picked; when level 6 is selected from the pull-down menu, the idioms from file "idiom_level6.json" should be randomly picked. But the mode currently doesn't work this way. Please make sure the selected level is properly recognized and passed through the code.
 
-
+sometimes in mode "idiom" after clicking the characters in the right sequence, the game doesn't recognize the correctness unless all the characters are in the bottom half of the screen. please fix it.
 
 1. deactivate default base environment
 conda deactivate base

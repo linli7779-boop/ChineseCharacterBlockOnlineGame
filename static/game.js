@@ -301,6 +301,13 @@ class Grid {
         }
         return false;
     }
+    unsettle(block) {
+        let gridX = Math.floor((block.x - this.left) / this.cell);
+        let gridY = Math.floor((block.y - this.top) / this.cell);
+        gridX = Math.max(0, Math.min(this.cols - 1, gridX));
+        gridY = Math.max(0, Math.min(this.rows - 1, gridY));
+        this.occupied[gridY][gridX] = null;
+    }
 }
 
 // Main Game class
@@ -824,14 +831,15 @@ class Game {
 
         const expected = this.idiomTarget[this.idiomClickIndex];
         for (const blk of this.currentBlocks) {
-            if (blk.settled || this.idiomClickedBlocks.includes(blk)) {
+            if ((blk.settled && this.mode !== Mode.IDIOM) ||
+                this.idiomClickedBlocks.includes(blk)) {
                 continue;
             }
-            const rect = blk.rect();
-            // Add small margin for easier clicking (5% of block size)
-            const margin = blk.size * 0.05;
-            if (x >= rect.left - margin && x < rect.right + margin &&
-                y >= rect.top - margin && y < rect.bottom + margin) {
+            const blkRect = blk.rect();
+            // Add larger margin for easier clicking (30% of block size)
+            const margin = blk.size * 0.3;
+            if (x >= blkRect.left - margin && x < blkRect.right + margin &&
+                y >= blkRect.top - margin && y < blkRect.bottom + margin) {
                 if (blk.char === expected) {
                     if (!this.idiomClickedBlocks.includes(blk)) {
                         this.idiomClickedBlocks.push(blk);
@@ -882,6 +890,7 @@ class Game {
                             for (const clickedBlk of
                                 this.idiomClickedBlocks) {
                                 if (this.currentBlocks.includes(clickedBlk)) {
+                                    this.grid.unsettle(clickedBlk);
                                     clickedBlk.settled = false;
                                     clickedBlk.vy = this.fallSpeed * 0.1;
                                 }
@@ -893,6 +902,7 @@ class Game {
                 } else {
                     for (const clickedBlk of this.idiomClickedBlocks) {
                         if (this.currentBlocks.includes(clickedBlk)) {
+                            this.grid.unsettle(clickedBlk);
                             clickedBlk.settled = false;
                             clickedBlk.vy = this.fallSpeed * 0.1;
                         }
@@ -1426,8 +1436,9 @@ class Game {
                                     }
                                 }
                             }
-                            this.currentBlocks = this.currentBlocks.filter(
-                                b => b !== blk);
+                            if (this.mode !== Mode.IDIOM) {
+                                this.currentBlocks = this.currentBlocks.filter(b => b !== blk);
+                            }
                             if (this.mode === Mode.PINYIN) {
                                 this.spawnRound();
                             } else if (this.mode === Mode.ROTATE) {
@@ -1647,6 +1658,12 @@ class Game {
                     continue;
                 }
                 this.drawBlock(blk.x, blk.y, blk.size, blk.char, blk.angle);
+                // Highlight clicked blocks in IDIOM mode
+                if (this.mode === Mode.IDIOM && this.idiomClickedBlocks.includes(blk)) {
+                    this.ctx.strokeStyle = '#00FF00';
+                    this.ctx.lineWidth = 3;
+                    this.ctx.strokeRect(blk.x, blk.y, blk.size, blk.size);
+                }
             }
         }
 
