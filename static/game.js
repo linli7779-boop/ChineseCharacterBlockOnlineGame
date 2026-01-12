@@ -464,6 +464,15 @@ class Game {
             blockSize = Math.floor(this.height / 10);
         }
 
+        // Ensure we can fit at least 12 columns for long idioms
+        const minCols = 12;
+        const maxBlockSize = Math.floor(this.playW / minCols);
+        if (blockSize > maxBlockSize) {
+            blockSize = maxBlockSize;
+        }
+        // Ensure minimum size for readability
+        blockSize = Math.max(blockSize, 30);
+
         // Cut first column: grid starts one blockSize to the right of sidebar
         // This visually cuts off the first column of the grid
         const gridLeft = this.sidebarW + blockSize;
