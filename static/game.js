@@ -1243,13 +1243,13 @@ class Game {
             const cols = [];
             const availableCols = Array.from(
                 { length: this.grid.cols }, (_, i) => i);
-            for (let i = 0; i < Math.min(4, this.grid.cols); i++) {
+            for (let i = 0; i < Math.min(chars.length, this.grid.cols); i++) {
                 const idx = Math.floor(
                     Math.random() * availableCols.length);
                 cols.push(availableCols.splice(idx, 1)[0]);
             }
             cols.sort((a, b) => a - b);
-            for (let i = 0; i < Math.min(chars.length, 4); i++) {
+            for (let i = 0; i < Math.min(chars.length, cols.length); i++) {
                 const x = this.grid.left + cols[i] * size;
                 const block = new Block(x, 0, size, chars[i], 0);
                 this.currentBlocks.push(block);

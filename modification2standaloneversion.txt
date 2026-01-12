@@ -76,6 +76,10 @@ The right way that mode "idiom" works should be when level 1 is selected from th
 
 sometimes in mode "idiom" after clicking the characters in the right sequence, the game doesn't recognize the correctness unless all the characters are in the bottom half of the screen. please fix it.
 
+in mode idiom, for an idiom longer than four characters, the game doesn't show all characters but only four. please fix.
+
+
+
 1. deactivate default base environment
 conda deactivate base
 2. set the policy:
