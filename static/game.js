@@ -1047,6 +1047,7 @@ class Game {
         }
         this.mode = mode;
         this.level = startLevel;
+        this.updateScoreDisplay();
         console.log(`startMode called with mode=${mode}, startLevel=${startLevel}, setting this.level=${this.level}`);
         this.score = 0;
         this.rightCount = 0;
