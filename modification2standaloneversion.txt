@@ -84,6 +84,8 @@ Please update the level number at the top-right corner right away once a level i
 
 In mode "idiom", sometimes when a character is clicked, it still doesn't recognize the click and the green box doesn't show up after many clicks until it falls to the bottom half. please check and fix it.
 
+The randomly picked characters and idioms should not be picked twice in all modes. please modify the code.
+
 1. deactivate default base environment
 conda deactivate base
 2. set the policy:

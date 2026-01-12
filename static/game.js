@@ -325,7 +325,8 @@ class Game {
 
         this.charLevels = [];
         this.idiomLevels = [];
-        this.idiomLevels = [];
+        this.usedChars = new Set();
+        this.usedIdioms = new Set();
 
         this.running = true;
         this.mode = null;
@@ -1064,6 +1065,7 @@ class Game {
         this.setTargetRight();
         this.grid.clear();
         this.usedChars.clear();
+        this.usedIdioms.clear();
         this.settledPinyin.clear();
 
         let instructionText = '';
@@ -1109,6 +1111,7 @@ class Game {
             this.message = 'Next Level';
             this.showMessageUntil = Date.now() + 1000;
             this.usedChars.clear();
+            this.usedIdioms.clear();
             this.settledPinyin.clear();
             this.spawnRound();
         } else {
@@ -1124,6 +1127,8 @@ class Game {
         if ((this.mode === Mode.ROTATE || this.mode === Mode.PINYIN) &&
             this.currentChar) {
             this.usedChars.add(this.currentChar);
+        } else if (this.mode === Mode.IDIOM && this.idiomTarget) {
+            this.usedIdioms.add(this.idiomTarget);
         }
 
         let cx, cy;
@@ -1239,7 +1244,16 @@ class Game {
                 `array index ${this.level - 1}, ` +
                 `loaded ${idioms.length} idioms. ` +
                 `First idiom in array: ${idioms[0]}`);
-            const target = idioms[Math.floor(Math.random() * idioms.length)];
+
+            const availableIdioms = idioms.filter(i => !this.usedIdioms.has(i));
+            let target;
+            if (availableIdioms.length > 0) {
+                target = availableIdioms[Math.floor(Math.random() * availableIdioms.length)];
+            } else {
+                // All idioms used, reset (reshuffle)
+                this.usedIdioms.clear();
+                target = idioms[Math.floor(Math.random() * idioms.length)];
+            }
             console.log(`Selected idiom: ${target}`);
             this.idiomTarget = target;
 
