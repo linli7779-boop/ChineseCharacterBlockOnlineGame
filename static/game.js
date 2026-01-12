@@ -1260,6 +1260,18 @@ class Game {
             cols.sort((a, b) => a - b);
             for (let i = 0; i < Math.min(chars.length, cols.length); i++) {
                 const x = this.grid.left + cols[i] * size;
+                // Check for Game Over (spawn point occupied)
+                const gridX = Math.floor((x - this.grid.left) / size);
+                if (this.grid.occupied[0][gridX]) {
+                    this.message = 'Game Over\nClick to Restart';
+                    this.showMessageUntil = 0; // Show indefinitely until click (handled by restart logic or just freeze)
+                    this.running = false;
+                    // Optional: reset game on click? For now just stop.
+                    // Actually, let's just show message.
+                    this.showMessageUntil = Date.now() + 3000;
+                    setTimeout(() => location.reload(), 3000); // Simple reload for now or just stop
+                    return;
+                }
                 const block = new Block(x, 0, size, chars[i], 0);
                 this.currentBlocks.push(block);
             }
@@ -1452,11 +1464,8 @@ class Game {
                                 this.spawnRound();
                             } else if (this.mode === Mode.ROTATE) {
                                 this.spawnRound();
-                            } else if (this.mode === Mode.IDIOM) {
-                                if (this.currentBlocks.length === 0) {
-                                    this.spawnRound();
-                                }
                             }
+                            // Idiom mode spawn handled by continuous logic at end of update
                             break;
                         }
                     }
@@ -1560,6 +1569,27 @@ class Game {
             this.currentBlocks = [];
             this.idiomClickedBlocks = [];
             this.spawnRound();
+        }
+
+        // Continuous Spawning for Idiom Mode
+        if (this.mode === Mode.IDIOM && this.running && this.currentBlocks.length > 0) {
+            const allSettled = this.currentBlocks.every(b => b.settled);
+            // Only trigger if we aren't already waiting for success effect
+            if (allSettled && this.idiomSuccessUntil === 0) {
+                if (!this.nextSpawnTime) {
+                    this.nextSpawnTime = Date.now() + 1000; // 1 second delay
+                } else if (Date.now() > this.nextSpawnTime) {
+                    this.nextSpawnTime = 0;
+                    this.spawnRound();
+                }
+            } else {
+                // Reset timer if something unsettles (e.g. user clicked wrong)
+                // EXCEPT if we are waiting for timer. 
+                // Actually, if allSettled becomes false, we should reset.
+                if (!allSettled) {
+                    this.nextSpawnTime = 0;
+                }
+            }
         }
 
         const now = Date.now();

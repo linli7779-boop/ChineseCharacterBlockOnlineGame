@@ -78,7 +78,7 @@ sometimes in mode "idiom" after clicking the characters in the right sequence, t
 
 in mode idiom, for an idiom longer than four characters, the game doesn't show all characters but only four. please fix.
 
-
+If two idioms are stacked up at the bottom of the screen, there are no more idioms showing up and the game stops. Please fix it.
 
 1. deactivate default base environment
 conda deactivate base
